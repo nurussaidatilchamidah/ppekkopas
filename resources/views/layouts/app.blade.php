@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'BPS Kota Pasuruan')</title>
+	<link rel="icon" href="img/logo.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -56,28 +57,38 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             border-radius: 12px;
             padding-bottom: 1rem;
-            min-height: 200px;
+            min-height: 100px;
             max-width: 500px;
             margin: auto;
             width: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        }
+          .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
         }
 
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1e3c72;">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(45deg, var(--bps-blue-light) 0%, var(--bps-blue) 100%);">
     <div class="container">
-        <a class="navbar-brand text-white fw-bold text-decoration-none" href="{{ route('dashboard') }}" 
-            style=" font-size: 1.5rem;
-            font-weight: 600;
-            color: white;">
-        BPS Kota Pasuruan
-        </a>
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link text-white" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>
-            <a class="nav-link text-white" href="{{ route('pendataan.index') }}">Pendataan</a>
-        </div>
+       <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('dashboard') }}">
+    <img src="{{ asset('img/logo.png') }}" alt="Logo 1" height="40">
+    <img src="{{ asset('img/kopas.png') }}" alt="Logo 2" height="50">
+    <img src="{{ asset('img/uniwara.png') }}" alt="Logo 3" height="50">
+		</a>
+
+       <ul class="navbar-nav ms-auto flex-row">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{{ route('pendataan.index') }}">Pendataan</a>
+            </li>
+        </ul>
     </div>
 </nav>
 

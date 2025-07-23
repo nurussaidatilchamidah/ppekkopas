@@ -5,7 +5,7 @@ use App\Http\Controllers\PemutakhiranController;
 use App\Http\Controllers\PendataanController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/dashboard');
 });
 
 // Routes untuk CRUD Pemutakhiran
@@ -18,4 +18,6 @@ Route::resource('pendataan', PendataanController::class);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+
 
