@@ -58,7 +58,6 @@
                 <th>Nilai Aset Mesin</th>
                 <th>Izin Usaha</th>
                 <th>Catatan</th>
-                <th>Koordinat (Lat,Long)</th> 
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -78,7 +77,6 @@
                 <td>{{ number_format($item->nilai_aset_mesin_dan_alat_produksi_lain, 0, ',', '.') }}</td>
                 <td>{{ $item->izin_usaha }}</td>
                 <td>{{ $item->catatan }}</td>
-                <td>{{ $item->latitude }}, {{ $item->longitude }}</td> <!-- Gabungkan di sini -->
                 <td>
                     <a href="{{ route('pendataan.show', $item->id) }}" class="btn btn-info btn-sm">Detail</a>
                     <a href="{{ route('pendataan.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>

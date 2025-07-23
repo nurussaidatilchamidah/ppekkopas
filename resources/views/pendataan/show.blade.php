@@ -17,12 +17,7 @@
         <tr><th>Nilai Aset Mesin</th><td>{{ $data->nilai_aset_mesin_dan_alat_produksi_lain }}</td></tr>
         <tr><th>Izin Usaha</th><td>{{ $data->izin_usaha ?? '-' }}</td></tr>
         <tr><th>Catatan</th><td>{{ $data->catatan ?? '-' }}</td></tr>
-        <tr><th>Koordinat (Lat, Long)</th><td>{{ $data->latitude }},{{ $data->longitude }}</td></tr>
     </table>
-
-    <h5 class="mt-4">Lokasi Usaha:</h5>
-    <div id="map"></div>
-
     <a href="{{ route('pendataan.index') }}" class="btn btn-secondary mt-4">Kembali</a>
 </div>
 
@@ -40,21 +35,4 @@
         border-radius: 8px;
     }
 </style>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var lat = {{ $data->latitude ?? 0 }};
-        var lng = {{ $data->longitude ?? 0 }};
-
-        var map = L.map('map').setView([lat, lng], 15);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        L.marker([lat, lng]).addTo(map)
-            .bindPopup("Lokasi Usaha")
-            .openPopup();
-    });
-</script>
 @endsection

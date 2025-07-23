@@ -9,7 +9,7 @@
 
           <div class="row">
             <!-- Kolom kiri -->
-            <div class="col-md-6">
+            <div class="col-md-6" style="flex: 1; min-width: 300px;">
               <div class="mb-3">
                 <label for="kelurahan" class="form-label">Kelurahan<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
                 <select name="kelurahan" class="form-control" required>
@@ -71,10 +71,10 @@
 </div>
 
     <!-- Kolom kanan -->
-    <div class="col-md-6">
+    <div class="col-md-6" style="flex: 1; min-width: 300px;">
     <div class="mb-3">
-         <label for="pendapatan"> Pendapatan/Omset per Tahn<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-        <input type="text" id="pendapatan" class="form-control" required placeholder="Pendapatan per bulan minimal Rp.100.000">
+         <label for="pendapatan"> Pendapatan/Omset per Tahun<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
+        <input type="text" id="pendapatan" class="form-control" required placeholder="Pendapatan per tahun minimal Rp.100.000">
         <input type="hidden" name="pendapatan_per_bulan" id="pendapatan_hidden">
     </div>
 
@@ -86,13 +86,13 @@
 
     <div class="mb-3">
         <label for="nilai_aset_gedung_dan_kendaraan">Nilai Aset Gedung dan Kendaraan<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-        <input type="text" id="aset_gedung" class="form-control" required placeholder="Nilai aset gedung dan kendaraan wajib diisi">
+        <input type="text" id="aset_gedung" class="form-control" required placeholder="Nilai aset gedung dan kendaraan minimal Rp.100.000">
         <input type="hidden" name="nilai_aset_gedung_dan_kendaraan" id="nilai_aset_gedung_kendaraan_hidden">
     </div>
 
     <div class="mb-3">
         <label for="nilai_aset_mesin_dan_alat_produksi_lain">Nilai Aset Mesin dan Alat Produksi Lain<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-        <input type="text" id="aset_mesin" class="form-control" required placeholder="Nilai aset mesin dan alat produksi lain wajib diisi">
+        <input type="text" id="aset_mesin" class="form-control" required placeholder="Nilai aset mesin dan alat produksi lain minimal Rp.100.000">
         <input type="hidden" name="nilai_aset_mesin_dan_alat_produksi_lain" id="nilai_aset_mesin_alat_hidden">
     </div>
 
