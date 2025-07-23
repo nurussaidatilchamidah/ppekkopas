@@ -5,6 +5,7 @@
 <div class="container mt-5">
     <h2 class="mb-4 fw-bold">Data Pendataan Usaha</h2>
     <a href="{{ route('pendataan.create') }}" class="btn btn-primary mb-4">Tambah Data</a>
+    <a href="{{ url('/pendataan/export') }}" class="btn btn-success mb-4">Export Data</a>
 
     @if(session('success'))
     @endif
@@ -19,8 +20,8 @@
 
     .table th, .table td {
         white-space: nowrap;
-        font-size: 16px; /* Lebih besar dari sebelumnya (12px) */
-        padding: 12px; /* Tambahan padding agar tidak terlalu rapat */
+        font-size: 16px; 
+        padding: 12px; 
         vertical-align: middle;
     }
 
@@ -35,7 +36,8 @@
     }
 
     .btn {
-        font-size: 16px; /* Ukuran tombol */
+        font-size: 16px; 
+        margin-left: 10px;
     }
 </style>
 

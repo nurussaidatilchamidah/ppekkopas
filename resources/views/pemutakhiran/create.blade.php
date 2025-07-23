@@ -1,12 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div>
-    <h2>Tambah Data Pemutakhiran</h2>
+<div class="container mt-5">
+    <h2 class="mb-4">Tambah Data Pemutakhiran</h2>
     <form action="{{ route('pemutakhiran.store') }}" method="POST">
         @csrf
 
-        <div>
+        <div class="row">
+            <!-- Kolom Kiri -->
+            <div class="col-md-6">
+            <div class="mb-3">
             <label for="kelurahan" class="form-label">Kelurahan<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
             <select name="kelurahan" class="form-control" required>
                 <option value="">-- Pilih Kelurahan --</option>
@@ -21,7 +24,7 @@
             </select>
         </div>
 
-    <div>
+            <div class="mb-3">
                 <label for="rw" class="form-label">RW<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
                 <select name="rw" class="form-control" required>
                     <option value="">-- Pilih RW --</option>
@@ -31,7 +34,7 @@
                 </select>
     </div> 
 
-    <div>
+    <div class="mb-3">
         <label for="rt" class="form-label">RT<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
         <select name="rt" class="form-control" required>
             <option value="">-- Pilih RT --</option>
@@ -51,7 +54,10 @@
          <label for="rt">Nama Pemilik</label>
         <input type="text" name="nama_pemilik" class="form-control" required placeholder="Nama pemilik tidak wajib diisi">
     </div>
+</div>
 
+     <!-- Kolom Kanan -->
+    <div class="col-md-6">
     <div class="mb-3">
          <label for="rt"> Alamat Usaha</label>
         <input type="text" name="alamat_usaha" class="form-control" required placeholder="Alamat usaha tidak wajib diisi">
@@ -62,7 +68,7 @@
         <input type="text" name="deskripsi_usaha" class="form-control" required placeholder="Deskripsi usaha wajib diisi">
     </div>
 
-    <div>
+    <div class="mb-3">
         <label for="kategori_usaha" class="form-label">Kategori Usaha<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
         <select name="kategori_usaha" class="form-control" required>
             <option value="">-- Pilih Kategori Usaha --</option>
@@ -80,7 +86,7 @@
         <input type="longtext" name="catatan" class="form-control" required placeholder="Catatan tidak wajib diisi">
     </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="latlong">Ambil Koordinat<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
             <div class="input-group">
                 <input type="text" id="latlong" name="latlong" placeholder="Titik koordinat wajib diisi" class="form-control" value="{{ old('latlong') }}" readonly required>
@@ -88,6 +94,8 @@
             </div>
             <small class="text-muted">Klik tombol untuk mengambil koordinat dari lokasi saat ini.</small>
         </div>
+</div>
+</div>
 
         <script>
             function getLocation() {
@@ -168,7 +176,12 @@
             });
         </script>
 
-        <button type="submit" class="btn btn-success">Simpan</button>
+        <div class="d-flex justify-content-between mt-3">
+            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
+            <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
+
+
     </form>
 </div>
 

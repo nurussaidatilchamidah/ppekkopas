@@ -4,6 +4,7 @@
 <div class="container mt-5">
     <h2 class="mb-4 fw-bold">Data Pemutakhiran Usaha</h2>
     <a href="{{ route('pemutakhiran.create') }}" class="btn btn-primary mb-4">Tambah Data</a>
+    <a href="{{ url('/pemutakhiran/export') }}" class="btn btn-success mb-4">Export Data</a>
 
     @if(session('success'))
     @endif
@@ -19,8 +20,8 @@
 
     .table th, .table td {
         white-space: nowrap;
-        font-size: 16px; /* Lebih besar dari sebelumnya (12px) */
-        padding: 12px; /* Tambahan padding agar tidak terlalu rapat */
+        font-size: 16px; 
+        padding: 12px; 
         vertical-align: middle;
     }
 
@@ -35,7 +36,8 @@
     }
 
     .btn {
-        font-size: 16px; /* Ukuran tombol */
+        font-size: 16px; 
+        margin-left: 10px;
     }
 </style>
 
@@ -60,7 +62,7 @@
         <tbody>
             @foreach($data as $index => $item)
             <tr>
-                <td>{{ $loop->iteration }}</td> {{-- Aman, pakai fitur bawaan Blade --}}
+                <td>{{ $loop->iteration }}</td> 
                 <td>{{ $item->kelurahan }}</td>
                 <td>{{ $item->rw }}</td>
                 <td>{{ $item->rt }}</td>

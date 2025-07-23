@@ -4,7 +4,7 @@
 <div class="container mt-5">
     <h2 class="mb-4">Detail Pemutakhiran Usaha</h2>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered"> 
         <tr><th>Kelurahan</th><td>{{ $data->kelurahan }}</td></tr>
         <tr><th>RW</th><td>{{ $data->rw }}</td></tr>
         <tr><th>RT</th><td>{{ $data->rt }}</td></tr>

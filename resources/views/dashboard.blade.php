@@ -37,7 +37,7 @@
                  <i class="fas fa-database me-2 fs-5"></i>     
                      Kelola Data Pendataan
             </p>            <a href="{{ route('pendataan.create') }}" class="btn btn-bps-warning w-100">
-                <i class="fas fa-plus"></i> Tambah Data Baru
+                <i class="fas fa-plus "></i> Tambah Data Baru
             </a>
         </div>
     </div>

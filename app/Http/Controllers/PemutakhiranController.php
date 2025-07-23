@@ -33,9 +33,10 @@ class PemutakhiranController extends Controller
             'latlong' => 'required|string',
         ]);
 
-        $koordinat = explode(',', $request->latlong);
-        $latitude = $koordinat[0] ?? null;
-        $longitude = $koordinat[1] ?? null;
+        $koordinat = array_map('trim', explode(',', $request->latlong));
+        $latitude = !empty($koordinat[0]) ? $koordinat[0] : null;
+        $longitude = !empty($koordinat[1]) ? $koordinat[1] : null;
+
 
         PemutakhiranData::create([
             'kelurahan' => $request->kelurahan,
@@ -74,10 +75,12 @@ class PemutakhiranController extends Controller
         'catatan' => 'nullable|string',
         'latlong' => 'required|string',
     ]);
+    
+        $koordinat = $request->latlong ? explode(',', $request->latlong) : [null, null];
 
-    $koordinat = explode(',', $request->latlong);
-    $latitude = trim($koordinat[0] ?? '');
-    $longitude = trim($koordinat[1] ?? '');
+        $latitude = isset($koordinat[0]) && $koordinat[0] !== '' ? $koordinat[0] : null;
+        $longitude = isset($koordinat[1]) && $koordinat[1] !== '' ? $koordinat[1] : null;
+
 
     $data = PemutakhiranData::findOrFail($id);
     $data->update([

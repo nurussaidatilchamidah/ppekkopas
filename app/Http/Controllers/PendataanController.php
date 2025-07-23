@@ -36,13 +36,17 @@ class PendataanController extends Controller
             'nilai_aset_mesin_dan_alat_produksi_lain' => 'required|numeric|min:100000',
             'izin_usaha' => 'nullable|string',
             'catatan' => 'nullable|string',
-            'latlong' => 'required|string',
+            'latlong' => 'nullable|string',
         ]);
 
-        // Pisahkan latlong jadi latitude & longitude
-        $koordinat = explode(',', $request->latlong);
-        $latitude = trim($koordinat[0] ?? null);
-        $longitude = trim($koordinat[1] ?? null);
+        if ($request->filled('latlong')) {
+                    [$latitude, $longitude] = explode(',', $request->latlong);
+                    $latitude = trim($latitude) ?: null;
+                    $longitude = trim($longitude) ?: null;
+                } else {
+                    $latitude = null;
+                    $longitude = null;
+                }
 
         // Simpan data ke DB
         PendataanUsaha::create([
@@ -89,12 +93,17 @@ class PendataanController extends Controller
             'nilai_aset_mesin_dan_alat_produksi_lain' => 'required|numeric|min:100000',
             'izin_usaha' => 'nullable|string',
             'catatan' => 'nullable|string',
-            'latlong' => 'required|string',
+            'latlong' => 'nullable|string',
         ]);
 
-        $koordinat = explode(',', $request->latlong);
-        $latitude = trim($koordinat[0] ?? null);
-        $longitude = trim($koordinat[1] ?? null);
+    if ($request->filled('latlong')) {
+                [$latitude, $longitude] = explode(',', $request->latlong);
+                $latitude = trim($latitude) ?: null;
+                $longitude = trim($longitude) ?: null;
+            } else {
+                $latitude = null;
+                $longitude = null;
+            }
 
         $data = PendataanUsaha::findOrFail($id);
         $data->update([

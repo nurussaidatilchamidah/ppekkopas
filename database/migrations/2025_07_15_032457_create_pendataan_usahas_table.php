@@ -22,8 +22,8 @@ return new class extends Migration
             $table->decimal('nilai_aset_mesin_dan_alat_produksi_lain', 15, 2);
             $table->string('izin_usaha')->nullable();
             $table->text('catatan')->nullable();
-            $table->decimal('latitude', 10, 8);
-            $table->decimal('longitude', 11, 8);
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->timestamps();
         });
     }

@@ -65,7 +65,7 @@
             <!-- Kolom kanan -->
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label for="pendapatan" class="form-label">Pendapatan/Bulan<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
+                    <label for="pendapatan" class="form-label">Pendapatan/Tahun<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
                     <input type="text" id="pendapatan" class="form-control" value="{{ old('pendapatan_per_bulan', $data->pendapatan_per_bulan) }}" required>
                     <input type="hidden" name="pendapatan_per_bulan" id="pendapatan_hidden">
                 </div>
@@ -97,26 +97,7 @@
                     <label for="catatan" class="form-label">Catatan</label>
                     <textarea name="catatan" class="form-control">{{ old('catatan', $data->catatan) }}</textarea>
                 </div>
-  </div>
-                
-  
-                <div class="form-group">
-                    <label for="latlong">Edit Koordinat<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-                    <div class="input-group">
-                        <input type="text" id="latlong" name="latlong" class="form-control" value="{{ old('latlong', $data->latitude . ',' . $data->longitude) }}" readonly required>
-                        <button type="button" class="btn btn-primary" onclick="getLocation()">Koordinat Baru</button>
-                    </div>
-                    <small class="text-muted">Klik tombol untuk mengambil koordinat baru dari lokasi saat ini.</small>
-                </div>
-          
-           
-
-        <!-- MAP -->
-        <div class="row">
-            <div class="col-12">
-                <div id="map" class="my-3"></div>
-            </div>
-        </div>
+    </div>
 
         <!-- BUTTONS -->
         <div class="row">
@@ -127,23 +108,6 @@
         </div>
     </form>
 </div>
-
-<!-- Leaflet MAP -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<style>
-    #map {
-        height: 300px;
-        width: 100%;
-    }
-</style>
-
-@php
-    $defaultLat = old('latlong') ? explode(',', old('latlong'))[0] : $data->latitude;
-    $defaultLng = old('latlong') ? explode(',', old('latlong'))[1] : $data->longitude;
-@endphp
-
 
 <script>
     function formatRupiah(angka) {
@@ -176,45 +140,6 @@
                 });
             }
         });
-    });
-
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
-        } else {
-            alert("Browser Anda tidak mendukung Geolocation.");
-        }
-    }
-
-    function showPosition(position) {
-        const lat = position.coords.latitude;
-        const long = position.coords.longitude;
-        document.getElementById("latlong").value = `${lat},${long}`;
-    }
-
-    function showError(error) {
-        switch (error.code) {
-            case error.PERMISSION_DENIED: alert("User menolak permintaan geolocation."); break;
-            case error.POSITION_UNAVAILABLE: alert("Informasi lokasi tidak tersedia."); break;
-            case error.TIMEOUT: alert("Permintaan lokasi melebihi batas waktu."); break;
-            default: alert("Terjadi kesalahan yang tidak diketahui."); break;
-        }
-    }
-
-    const map = L.map('map').setView([{{ $defaultLat }}, {{ $defaultLng }}], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    let marker = L.marker([{{ $defaultLat }}, {{ $defaultLng }}]).addTo(map);
-
-    map.on('click', function (e) {
-        const lat = e.latlng.lat.toFixed(6);
-        const lng = e.latlng.lng.toFixed(6);
-        document.getElementById('latlong').value = lat + ',' + lng;
-
-        if (marker) map.removeLayer(marker);
-        marker = L.marker([lat, lng]).addTo(map);
     });
 </script>
 @endsection

@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'BPS Kota Pasuruan')</title>
+    <title>@yield('title', 'Badan Pusat Statistik Kota Pasuruan')</title>
 	<link rel="icon" href="img/logo.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
         :root {
             --bps-blue: #1e3c72;
@@ -72,26 +77,55 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(45deg, var(--bps-blue-light) 0%, var(--bps-blue) 100%);">
-    <div class="container">
-       <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('dashboard') }}">
-    <img src="{{ asset('img/logo.png') }}" alt="Logo 1" height="40">
-    <img src="{{ asset('img/kopas.png') }}" alt="Logo 2" height="50">
-    <img src="{{ asset('img/uniwara.png') }}" alt="Logo 3" height="50">
-		</a>
+  <!-- Bootstrap 5 Offcanvas Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(-45deg, #F47B20, #c5550fff);">
+    <div class="container d-flex justify-content-between align-items-center">
 
-       <ul class="navbar-nav ms-auto flex-row">
-            <li class="nav-item">
-                <a class="nav-link text-white" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="{{ route('pendataan.index') }}">Pendataan</a>
-            </li>
-        </ul>
+        <!-- Logo + Teks + Logo lainnya -->
+        <a href="{{ route('dashboard') }}" class="navbar-brand d-flex align-items-center gap-3 text-decoration-none">
+            <img src="{{ asset('img/logo.png') }}" alt="Logo BPS" height="40">
+
+            <!-- Teks tetap tampil di semua ukuran -->
+            <div class="d-block" style="line-height: 1;">
+                <span style="font-family: Arial, sans-serif; font-style: italic; font-weight: bold; color: white; font-size: 1.3rem;">
+                    BADAN PUSAT STATISTIK<br>KOTA PASURUAN
+                </span>
+            </div>
+
+            <img src="{{ asset('img/kopas.png') }}" alt="Logo Kopas" height="50">
+            <img src="{{ asset('img/uniwara.png') }}" alt="Logo Uniwara" height="50">
+        </a>
+
+        <!-- Toggle Sidebar -->
+        <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Normal menu di layar besar -->
+        <div class="d-none d-lg-flex gap-3">
+            <a class="nav-link text-white fw-semibold" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>
+            <a class="nav-link text-white fw-semibold" href="{{ route('pendataan.index') }}">Pendataan</a>
+        </div>
     </div>
 </nav>
 
+<!-- Offcanvas Sidebar Menu (Mobile) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title fw-bold" style="font-size: 0.95rem;">Aplikasi Pendataan Potensi Ekonomi Kelurahan</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+                <a class="nav-link fw-semibold" style="font-size: 1.05rem;" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link fw-semibold" style="font-size: 1.05rem;" href="{{ route('pendataan.index') }}">Pendataan</a>
+            </li>
+        </ul>
+    </div>
+</div>
 
     <!-- Main Content -->
     <div class="container mt-4 mb-5 px-4">

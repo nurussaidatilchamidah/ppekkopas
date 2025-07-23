@@ -6,22 +6,26 @@
     <h2>Tambah Data Pendataan</h2>
     <form action="{{ route('pendataan.store') }}" method="POST">
          @csrf
-            <div>
-            <label for="kelurahan" class="form-label">Kelurahan<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-            <select name="kelurahan" class="form-control" required>
-                <option value="" disabled selected>-- Pilih Kelurahan --</option>
-                @foreach(['Krapyakrejo','Bukir','Sebani','Gentong','Gadingrejo','Randusari',
-                'Petahunan','Karangketug','Pohjentrek','Wirogunan','Tembokrejo','Purutrejo',
-                'Kebonagung','Purworejo','Sekargadung','Blandongan','Bakalan','Krampyangan',
-                'Bungulkidul','Kepel','Tapaan','Pekucen','Pertamanan','Bungullor','Kandangsapi',
-                'Bangilan','Kebonsari','Karanganyar','Trajeng','Mayangan','Panggungrejo','Madaranrejo',
-                'Ngemplakrejo','Tambaan'] as $item)
-                    <option value="{{ $item }}">{{ $item }}</option>
-                @endforeach
-            </select>
-     </div>
 
-    <div>
+          <div class="row">
+            <!-- Kolom kiri -->
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="kelurahan" class="form-label">Kelurahan<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
+                <select name="kelurahan" class="form-control" required>
+                    <option value="" disabled selected>-- Pilih Kelurahan --</option>
+                    @foreach(['Krapyakrejo','Bukir','Sebani','Gentong','Gadingrejo','Randusari',
+                    'Petahunan','Karangketug','Pohjentrek','Wirogunan','Tembokrejo','Purutrejo',
+                    'Kebonagung','Purworejo','Sekargadung','Blandongan','Bakalan','Krampyangan',
+                    'Bungulkidul','Kepel','Tapaan','Pekucen','Pertamanan','Bungullor','Kandangsapi',
+                    'Bangilan','Kebonsari','Karanganyar','Trajeng','Mayangan','Panggungrejo','Madaranrejo',
+                    'Ngemplakrejo','Tambaan'] as $item)
+                        <option value="{{ $item }}">{{ $item }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+          <div class="mb-3">
                 <label for="rw" class="form-label">RW<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
                 <select name="rw" class="form-control" required>
                     <option value="" disabled selected>-- Pilih RW --</option>
@@ -29,9 +33,9 @@
                         <option value="{{ $item }}">{{ $item }}</option>
                     @endforeach
                 </select>
-    </div> 
+        </div> 
 
-    <div>
+        <div class="mb-3">
             <label for="rt" class="form-label">RT<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
             <select name="rt" class="form-control" required>
                 <option value="" disabled selected>-- Pilih RT --</option>
@@ -40,7 +44,7 @@
                     <option value="{{ $item }}">{{ $item }}</option>
                 @endforeach 
             </select>
-     </div> 
+        </div> 
 
     <div class="mb-3">
          <label for="nama_usaha">Nama Usaha<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
@@ -64,9 +68,12 @@
          <label for="jumlah">Jumlah Tenaga Kerja<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
         <input type="number" name="jumlah_tenaga_kerja" class="form-control" min="1" required Placeholder="Jumlah tenaga kerja wajib diisi Minimal 1">
     </div>
+</div>
 
+    <!-- Kolom kanan -->
+    <div class="col-md-6">
     <div class="mb-3">
-         <label for="pendapatan"> Pendapatan/Omset per Bulan<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
+         <label for="pendapatan"> Pendapatan/Omset per Tahn<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
         <input type="text" id="pendapatan" class="form-control" required placeholder="Pendapatan per bulan minimal Rp.100.000">
         <input type="hidden" name="pendapatan_per_bulan" id="pendapatan_hidden">
     </div>
@@ -99,15 +106,8 @@
         <input type="longtext" name="catatan" class="form-control" required placeholder="Catatan tidak wajib diisi (opsional)">
     </div>
 
-    
-  <div class="form-group">
-            <label for="latlong">Ambil Koordinat<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-            <div class="input-group">
-                <input type="text" id="latlong" name="latlong" placeholder="Titik koordinat wajib diisi" class="form-control" value="{{ old('latlong') }}" readonly required>
-                <button type="button" class="btn btn-primary" onclick="getLocation()">Ambil Koordinat</button>
-            </div>
-            <small class="text-muted">Klik tombol untuk mengambil koordinat dari lokasi saat ini.</small>
-     </div>
+</div>
+
 
 <script>
     function formatRupiah(angka) {
@@ -161,38 +161,6 @@
         this.value = formatRupiah(this.value);
     });
 
-    // Ambil lokasi
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
-        } else {
-            alert("Browser Anda tidak mendukung Geolocation.");
-        }
-    }
-
-    function showPosition(position) {
-        const lat = position.coords.latitude;
-        const long = position.coords.longitude;
-        document.getElementById("latlong").value = `${lat},${long}`;
-    }
-
-    function showError(error) {
-        switch(error.code) {
-            case error.PERMISSION_DENIED:
-                alert("User menolak permintaan geolocation.");
-                break;
-            case error.POSITION_UNAVAILABLE:
-                alert("Informasi lokasi tidak tersedia.");
-                break;
-            case error.TIMEOUT:
-                alert("Permintaan lokasi melebihi batas waktu.");
-                break;
-            case error.UNKNOWN_ERROR:
-                alert("Terjadi kesalahan yang tidak diketahui.");
-                break;
-        }
-    }
-
     document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('form').addEventListener('submit', function(e) {
         let errors = [];
@@ -232,9 +200,6 @@
         if (!asetMesin || parseInt(asetMesin) <= 0)
             errors.push("Nilai aset mesin dan alat produksi wajib diisi.");
 
-        const latlong = document.getElementById('latlong').value;
-        if (!latlong.trim()) errors.push("Titik koordinat wajib diisi.");
-
         // Tampilkan semua error
         if (errors.length > 0) {
             e.preventDefault();
@@ -250,41 +215,10 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<style>
-    #map {
-        height: 300px;
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-</style>
-
-<div id="map"></div>
-
-<script>
-    // Inisialisasi map
-    var map = L.map('map').setView([-7.6450, 112.9076], 13); // Ini Pasuruan
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    var marker;
-
-    map.on('click', function(e) {
-        var lat = e.latlng.lat.toFixed(6);
-        var lng = e.latlng.lng.toFixed(6);
-        var latlng = lat + ',' + lng;
-
-        document.getElementById('latlong').value = latlng;
-
-        if (marker) {
-            map.removeLayer(marker);
-        }
-        marker = L.marker([lat, lng]).addTo(map);
-    });
-</script>
-
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <div class="d-flex justify-content-between mt-3">
+            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
+            <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
     </form>
 </div>
 

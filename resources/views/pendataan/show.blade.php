@@ -11,7 +11,7 @@
         <tr><th>Nama Usaha</th><td>{{ $data->nama_usaha }}</td></tr>
         <tr><th>Kategori Usaha</th><td>{{ $data->kategori_usaha }}</td></tr> 
         <tr><th>Jumlah Tenaga Kerja</th><td>{{ $data->jumlah_tenaga_kerja }}</td></tr>
-        <tr><th>Pendapatan/Bulan</th><td>{{ $data->pendapatan_per_bulan }}</td></tr>
+        <tr><th>Pendapatan/Tahun</th><td>{{ $data->pendapatan_per_bulan }}</td></tr>
         <tr><th>Pengeluaran</th><td>{{ $data->pengeluaran_operasional }}</td></tr>
         <tr><th>Nilai Aset Gedung</th><td>{{ $data->nilai_aset_gedung_dan_kendaraan }}</td></tr>
         <tr><th>Nilai Aset Mesin</th><td>{{ $data->nilai_aset_mesin_dan_alat_produksi_lain }}</td></tr>
