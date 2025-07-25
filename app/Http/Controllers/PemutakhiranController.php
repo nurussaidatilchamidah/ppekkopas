@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class PemutakhiranController extends Controller
 {
-    public function index()
+    public function index() 
     {
         $data = PemutakhiranData::all();
         return view('pemutakhiran.index', compact('data'));
@@ -15,8 +15,10 @@ class PemutakhiranController extends Controller
 
     public function create()
     {
-        return view('pemutakhiran.create');
-    }
+        $prefill = session('prefill_data', []);
+return view('pemutakhiran.create', compact('prefill'));
+
+    }//menambahkan prefil
 
     public function store(Request $request)
     {
@@ -51,6 +53,18 @@ class PemutakhiranController extends Controller
             'latitude' => $latitude,
             'longitude' => $longitude,
         ]);
+
+        // ✅ SET SESSION UNTUK PREFILL PADA PENDAATAAN
+session([
+    'prefill_pendataan' => [
+        'kelurahan' => $request->kelurahan,
+        'rw' => $request->rw,
+        'rt' => $request->rt,
+        'nama_usaha' => $request->nama_usaha,
+        'kategori_usaha' => $request->kategori_usaha,
+    ]
+]);
+
 
         return redirect()->route('dashboard')->with('success', 'Data berhasil disimpan.');
     }

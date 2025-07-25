@@ -17,7 +17,8 @@ class PendataanController extends Controller
     // Menampilkan form tambah
     public function create()
     {
-        return view('pendataan.create');
+        $prefill = session('prefill_data', []);
+        return view('pendataan.create', compact('prefill'));
     }
 
     // Simpan data baru
@@ -66,6 +67,18 @@ class PendataanController extends Controller
             'latitude' => $latitude,
             'longitude' => $longitude,
         ]);
+
+       // ✅ SET SESSION UNTUK PREFILL PADA PENDAATAAN
+session([
+    'prefill_pendataan' => [
+        'kelurahan' => $request->kelurahan,
+        'rw' => $request->rw,
+        'rt' => $request->rt,
+        'nama_usaha' => $request->nama_usaha,
+        'kategori_usaha' => $request->kategori_usaha,
+    ]
+]);
+
 
         return redirect()->route('dashboard')->with('success', 'Data berhasil ditambahkan.');
     }

@@ -9,66 +9,84 @@
 
           <div class="row">
             <!-- Kolom kiri -->
-            <div class="col-md-6" style="flex: 1; min-width: 300px;">
-              <div class="mb-3">
-                <label for="kelurahan" class="form-label">Kelurahan<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-                <select name="kelurahan" class="form-control" required>
-                    <option value="" disabled selected>-- Pilih Kelurahan --</option>
-                    @foreach(['Krapyakrejo','Bukir','Sebani','Gentong','Gadingrejo','Randusari',
+            <div class="col-md-6">
+            <div class="mb-3">
+            <label for="kelurahan" class="form-label">Kelurahan<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
+            <select name="kelurahan" class="form-control" required>
+                <option value="" disabled {{ session('prefill_pendataan.kelurahan') ? '' : 'selected' }}>-- Pilih Kelurahan --</option>
+                @foreach([
+                    'Krapyakrejo','Bukir','Sebani','Gentong','Gadingrejo','Randusari',
                     'Petahunan','Karangketug','Pohjentrek','Wirogunan','Tembokrejo','Purutrejo',
                     'Kebonagung','Purworejo','Sekargadung','Blandongan','Bakalan','Krampyangan',
-                    'Bungulkidul','Kepel','Tapaan','Pekucen','Pertamanan','Bungullor','Kandangsapi',
+                    'Bugulkidul','Kepel','Tapaan','Pekucen','Pertamanan','Bugullor','Kandangsapi',
                     'Bangilan','Kebonsari','Karanganyar','Trajeng','Mayangan','Panggungrejo','Madaranrejo',
-                    'Ngemplakrejo','Tambaan'] as $item)
-                        <option value="{{ $item }}">{{ $item }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-          <div class="mb-3">
-                <label for="rw" class="form-label">RW<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-                <select name="rw" class="form-control" required>
-                    <option value="" disabled selected>-- Pilih RW --</option>
-                    @foreach(['001', '002', '003', '004', '005', '006', '007', '008', '009', '010','011','012'] as $item)
-                        <option value="{{ $item }}">{{ $item }}</option>
-                    @endforeach
-                </select>
-        </div> 
-
-        <div class="mb-3">
-            <label for="rt" class="form-label">RT<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-            <select name="rt" class="form-control" required>
-                <option value="" disabled selected>-- Pilih RT --</option>
-                @foreach(['001', '002', '003', '004', '005', '006', '007', '008', '009', '010',
-                '011','012','013','014','015','016','017','018','019','020'] as $item)
-                    <option value="{{ $item }}">{{ $item }}</option>
-                @endforeach 
-            </select>
-        </div> 
-
-    <div class="mb-3">
-         <label for="nama_usaha">Nama Usaha<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-        <input type="text" name="nama_usaha" class="form-control" required placeholder="Nama usaha wajib diisi">
-    </div>
-
-        <div class="mb-3">
-         <label for="kategori_usaha" class="form-label">Kategori Usaha<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-            <select name="kategori_usaha" class="form-control" required>
-                <option value="" disabled selected>-- Pilih Kategori Usaha --</option>
-               @foreach(['Pertanian, Kehutanan, dan Perikanan', 'Pertambangan dan Penggalian', 'Industri Pengolahan', 'Pengadaan Listrik dan Gas', 'Pengadaan Air, Pengelolaan Sampah, Limbah, dan Daur Ulang',
-                'Konstruksi', 'Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor', 'Transportasi dan Pergudangan/Transportation and Storage', 'Penyediaan Akomodasi dan Makan Minum',
-                'Informasi dan Komunikasi','Jasa Keuangan dan Asuransi','Real Estate','Jasa Perusahaan','Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib','Jasa Pendidikan',
-                'Jasa Kesehatan dan Kegiatan Sosial','Jasa Lainnya'] as $item)
-                <option value="{{ $item }}">{{ $item }}</option>
+                    'Ngemplakrejo','Tambaan'
+                ] as $item)
+                    <option value="{{ $item }}" {{ session('prefill_pendataan.kelurahan') == $item ? 'selected' : '' }}>{{ $item }}</option>
                 @endforeach
             </select>
-        </div> 
+        </div>
+
+          <div class="mb-3">
+            <label for="rw" class="form-label">RW<span class="text-danger fw-bold" style="font-size: 1.3em;">*</span></label>
+            <select name="rw" class="form-control" required>
+                <option value="" disabled {{ session('prefill_pendataan.rw') ? '' : 'selected' }}>-- Pilih RW --</option>
+                @foreach(['001', '002', '003', '004', '005', '006', '007', '008', '009', '010','011','012'] as $item)
+                    <option value="{{ $item }}" {{ session('prefill_pendataan.rw') == $item ? 'selected' : '' }}>{{ $item }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="rt" class="form-label">RT<span class="text-danger fw-bold" style="font-size: 1.3em;">*</span></label>
+            <select name="rt" class="form-control" required>
+                <option value="" disabled {{ session('prefill_pendataan.rt') ? '' : 'selected' }}>-- Pilih RT --</option>
+                @foreach(['001', '002', '003', '004', '005', '006', '007', '008', '009', '010',
+                '011','012','013','014','015','016','017','018','019','020'] as $item)
+                    <option value="{{ $item }}" {{ session('prefill_pendataan.rt') == $item ? 'selected' : '' }}>{{ $item }}</option>
+                @endforeach 
+            </select>
+        </div>
+
+        <div class="mb-3">
+                <label for="nama_usaha">Nama Usaha<span class="text-danger fw-bold" style="font-size: 1.3em;">*</span></label>
+                <input type="text" name="nama_usaha" class="form-control" required placeholder="Nama usaha wajib diisi" 
+                 value="{{ session('prefill_pendataan.nama_usaha') }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="kategori_usaha" class="form-label">Kategori Usaha<span class="text-danger fw-bold" style="font-size: 1.3em;">*</span></label>
+            <select name="kategori_usaha" class="form-control" required>
+                <option value="" disabled {{ old('kategori_usaha') ? '' : 'selected' }}>-- Pilih Kategori Usaha --</option>
+                @foreach([
+                    'Pertanian, Kehutanan, dan Perikanan',
+                    'Pertambangan dan Penggalian',
+                    'Industri Pengolahan',
+                    'Pengadaan Listrik dan Gas',
+                    'Pengadaan Air, Pengelolaan Sampah, Limbah, dan Daur Ulang',
+                    'Konstruksi',
+                    'Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor',
+                    'Transportasi dan Pergudangan/Transportation and Storage',
+                    'Penyediaan Akomodasi dan Makan Minum',
+                    'Informasi dan Komunikasi',
+                    'Jasa Keuangan dan Asuransi',
+                    'Real Estate',
+                    'Jasa Perusahaan',
+                    'Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib',
+                    'Jasa Pendidikan',
+                    'Jasa Kesehatan dan Kegiatan Sosial',
+                    'Jasa Lainnya'
+                ] as $item)
+                <option value="{{ $item }}" {{ session('prefill_pendataan.kategori_usaha') == $item ? 'selected' : '' }}>{{ $item }}</option>
+                @endforeach
+            </select>
+        </div>
 
     <div class="mb-3">
-         <label for="jumlah">Jumlah Tenaga Kerja<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-        <input type="number" name="jumlah_tenaga_kerja" class="form-control" min="1" required Placeholder="Jumlah tenaga kerja wajib diisi Minimal 1">
+            <label for="jumlah">Jumlah Tenaga Kerja<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
+            <input type="number" name="jumlah_tenaga_kerja" class="form-control" min="1" required Placeholder="Jumlah tenaga kerja wajib diisi Minimal 1">
+        </div>
     </div>
-</div>
 
     <!-- Kolom kanan -->
     <div class="col-md-6" style="flex: 1; min-width: 300px;">
