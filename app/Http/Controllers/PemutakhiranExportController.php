@@ -12,6 +12,7 @@ class PemutakhiranExportController extends Controller
     {
         $data = PemutakhiranData::all();
         return view('pemutakhiran.index', compact('data'));
+        
     }
 
     public function create()

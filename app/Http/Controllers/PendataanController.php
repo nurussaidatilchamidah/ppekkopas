@@ -8,11 +8,24 @@ use Illuminate\Http\Request;
 class PendataanController extends Controller
 {
     // Menampilkan semua data
-    public function index()
+    public function index(Request $request) //search
     {
-        $data = PendataanUsaha::all();
+        $query = PendataanUsaha::query();
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama_usaha', 'like', "%$search%")
+                ->orWhere('kelurahan', 'like', "%$search%")
+                ->orWhere('kategori_usaha', 'like', "%$search%");
+            });
+        }
+
+        $data = $query->paginate(10); // jika kamu pakai pagination
+
         return view('pendataan.index', compact('data'));
     }
+
 
     // Menampilkan form tambah
     public function create()

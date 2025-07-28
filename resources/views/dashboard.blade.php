@@ -2,13 +2,13 @@
 
 @section('content')
 <h2 class="mb-5 text-center fw-bold mt-5" style="font-size: 2.2rem;">
-    Selamat Datang di Aplikasi Pendataan Potensi Ekonomi Kelurahan
+    Selamat Datang di Aplikasi SUROPATI <br>
+    (Survei Potensi dan Pemetaan Usaha Ekonomi)
 </h2>
 
-<div class="d-flex flex-column align-items-center justify-content-start px-0">
-
-    <!-- Card Pemutakhiran Data -->
-    <div class="card mb-4" style="width: 95vw;">
+<div class="container my-4">
+<!-- Card Pemutakhiran Data -->
+    <div class="card mb-4">
         <div class="card-header card-header-bps">
             <h5 class="card-title mb-0">
               Pemutakhiran Usaha
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Card Pendataan Usaha -->
-    <div class="card" style="width: 95vw;">
+    <div class="card mb-4">
         <div class="card-header card-header-bps">
             <h5 class="card-title mb-0">
               Pendataan Usaha

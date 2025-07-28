@@ -3,8 +3,11 @@
 @section('content')
 <div class="container mt-5">
     <h2 class="mb-4 fw-bold">Data Pemutakhiran Usaha</h2>
-    <a href="{{ route('pemutakhiran.create') }}" class="btn btn-primary mb-4">Tambah Data</a>
-    <a href="{{ url('/pemutakhiran/export') }}" class="btn btn-success mb-4">Export Data</a>
+   <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+    <div>
+        <a href="{{ route('pemutakhiran.create') }}" class="btn btn-primary">Tambah Data</a>
+        <a href="{{ url('/pemutakhiran/export') }}" class="btn btn-success">Export Data</a>
+    </div>
 
     @if(session('success'))
     @endif
@@ -39,7 +42,61 @@
         font-size: 16px; 
         margin-left: 10px;
     }
+
+     .custom-search-input {
+        border: 3px solid #ccc;
+        border-radius: 8px;
+        flex: 1;
+        min-width: 300px;
+        max-width: 100%;
+        padding: 4px 10px;
+        font-size: 15px;
+        height: 36px;
+    }
+
+    .custom-search-input:focus {
+        border-color: #f0ad4e;
+        box-shadow: 0 0 0 0.2rem rgba(240, 173, 78, 0.25);
+    }
+
+    .search-container {
+        flex: 1;
+        max-width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        gap: 2px;
+    }
+
+    .btn-warning {
+        background-color: #f0ad4e;
+        border-color: #eea236;
+    }
+
+    .btn-warning:hover {
+        background-color: #ec971f;
+        border-color: #d58512;
+        padding: 2px 14px;
+        font-size: 17px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
+
+<!-- search -->
+<form action="{{ route('pemutakhiran.index') }}" method="GET" class="d-flex flex-grow-1 justify-content-end" role="search" style="max-width: 100%;">
+        <input 
+            type="text" 
+            name="search" 
+            class="form-control custom-search-input" 
+            placeholder="Cari berdasarkan kelurahan, nama usaha atau kategori usaha....."             value="{{ request('search') }}"
+            value="{{ request('search') }}"
+            style="min-width: 300px;">
+        <button class="btn btn-warning text-white" type="submit" title="Cari">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
 
   <div class="table-wrapper">
         <table class="table table-bordered text-center">
@@ -86,5 +143,11 @@
             @endforeach
         </tbody>
     </table>
+
+    <!-- pagination -->
+    <div class="d-flex justify-content-center">
+        {{ $data->withQueryString()->links() }}
+    </div>
+
 </div>
 @endsection

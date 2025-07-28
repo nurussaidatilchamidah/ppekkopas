@@ -2,8 +2,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2>Tambah Data Pendataan</h2>
+<div class="container mt-5">
+    <h2 h2 class="mb-4">Tambah Data Pendataan</h2>
     <form action="{{ route('pendataan.store') }}" method="POST">
          @csrf
 
@@ -58,25 +58,11 @@
             <label for="kategori_usaha" class="form-label">Kategori Usaha<span class="text-danger fw-bold" style="font-size: 1.3em;">*</span></label>
             <select name="kategori_usaha" class="form-control" required>
                 <option value="" disabled {{ old('kategori_usaha') ? '' : 'selected' }}>-- Pilih Kategori Usaha --</option>
-                @foreach([
-                    'Pertanian, Kehutanan, dan Perikanan',
-                    'Pertambangan dan Penggalian',
-                    'Industri Pengolahan',
-                    'Pengadaan Listrik dan Gas',
-                    'Pengadaan Air, Pengelolaan Sampah, Limbah, dan Daur Ulang',
-                    'Konstruksi',
-                    'Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor',
-                    'Transportasi dan Pergudangan/Transportation and Storage',
-                    'Penyediaan Akomodasi dan Makan Minum',
-                    'Informasi dan Komunikasi',
-                    'Jasa Keuangan dan Asuransi',
-                    'Real Estate',
-                    'Jasa Perusahaan',
-                    'Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib',
-                    'Jasa Pendidikan',
-                    'Jasa Kesehatan dan Kegiatan Sosial',
-                    'Jasa Lainnya'
-                ] as $item)
+                @foreach(['A. Pertanian, Kehutanan, dan Perikanan', 'B. Pertambangan dan Penggalian', 'C. Industri Pengolahan', 'D. Pengadaan Listrik, Gas, Uap/Air Panas dan Udara Dingin', 'E. Pengadaan Air, Pengelolaan Sampah, Limbah, dan Daur Ulang',
+                'F. Konstruksi', 'G. Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor', 'H. Transportasi dan Pergudangan', 'I. Penyediaan Akomodasi dan Makan Minum',
+                'J. Informasi dan Komunikasi','K. Jasa Keuangan dan Asuransi','L. Real Estat','M. Aktivitas Profesional, Ilmiah, dan Teknis','N. Aktivitas Penyewaan dan Sewa Guna Usaha tanpa Hak Opsi, Ketenagakerjaan, Agen Perjalanan dan Penunjang Usaha Lainnya',
+                 'O. Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib','P. Jasa Pendidikan', 
+                'Q. Jasa Kesehatan dan Kegiatan Sosial','R. Kesenian, Hiburan, dan Rekreasi', 'S. Aktivitas Jasa Lainnya'] as $item)
                 <option value="{{ $item }}" {{ session('prefill_pendataan.kategori_usaha') == $item ? 'selected' : '' }}>{{ $item }}</option>
                 @endforeach
             </select>
@@ -89,7 +75,7 @@
     </div>
 
     <!-- Kolom kanan -->
-    <div class="col-md-6" style="flex: 1; min-width: 300px;">
+    <div class="col-md-6">
     <div class="mb-3">
          <label for="pendapatan"> Pendapatan/Omset per Tahun<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
         <input type="text" id="pendapatan" class="form-control" required placeholder="Pendapatan per tahun minimal Rp.100.000">
@@ -115,15 +101,29 @@
     </div>
 
     <div class="mb-3">
-         <label for="izinusaha">Izin Usaha (jika ada) </label>
-        <input type="text" name="izin_usaha" class="form-control" required placeholder="Izin usaha tidak wajib diisi (opsional)">
+        <label for="bentukusaha" class="form-label">Bentuk Badan Usaha<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
+            <select name="izin_usaha" class="form-control" required>
+                <option value="" disabled selected>-- Pilih Bentuk Badan Usaha --</option>
+                @foreach(['Perseroan (PT/NV, PT Persero, PT Tbk, Pt Persero Tbk, Perseroan Daerah, Perseroan Perorangan','Yayasan',
+                    'Koperasi','BUMKel','Persekutuan Komanditer (CV)','Persekutuan Firma','Usaha Orang/Perseorangan'] as $item)
+                    <option value="{{ $item }}">{{ $item }}</option>
+                @endforeach 
+            </select>
     </div>
    
      <div class="mb-3">
          <label for="catatan">Catatan </label>
         <input type="longtext" name="catatan" class="form-control" required placeholder="Catatan tidak wajib diisi (opsional)">
     </div>
+</div>
 
+  <div class="row">
+            <div class="col-12 d-flex justify-content-between mt-4 px-3">
+            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
+            <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
+</div>
+    </form>
 </div>
 
 
@@ -232,13 +232,7 @@
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-        <div class="d-flex justify-content-between mt-3">
-            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
-            <button type="submit" class="btn btn-success">Simpan</button>
-        </div>
-    </form>
-</div>
+        
 
 <style>
     ::placeholder {

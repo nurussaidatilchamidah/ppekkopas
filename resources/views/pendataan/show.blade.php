@@ -15,7 +15,7 @@
         <tr><th>Pengeluaran</th><td>{{ $data->pengeluaran_operasional }}</td></tr>
         <tr><th>Nilai Aset Gedung</th><td>{{ $data->nilai_aset_gedung_dan_kendaraan }}</td></tr>
         <tr><th>Nilai Aset Mesin</th><td>{{ $data->nilai_aset_mesin_dan_alat_produksi_lain }}</td></tr>
-        <tr><th>Izin Usaha</th><td>{{ $data->izin_usaha ?? '-' }}</td></tr>
+        <tr><th>Bentuk Usaha</th><td>{{ $data->izin_usaha ?? '-' }}</td></tr>
         <tr><th>Catatan</th><td>{{ $data->catatan ?? '-' }}</td></tr>
     </table>
     <a href="{{ route('pendataan.index') }}" class="btn btn-secondary mt-4">Kembali</a>

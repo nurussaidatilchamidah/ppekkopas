@@ -74,6 +74,28 @@
             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
         }
 
+          
+                 @media (max-width: 768px) {
+            .navbar-brand span {
+              font-size: 1.0rem !important; /* Ukuran teks lebih kecil */
+              line-height: 1.1;
+            }
+
+            .navbar-brand img {
+              height: 35px !important; /* Logo lebih kecil */
+            }
+
+            .navbar-brand {
+              gap: 0.5rem !important;
+            }
+          }
+            
+        .offcanvas-header .btn-close {
+            z-index: 1060 !important; /* pastikan di atas */
+            position: relative;
+        }
+
+        
     </style>
 </head>
 <body>

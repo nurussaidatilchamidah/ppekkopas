@@ -7,9 +7,20 @@ use Illuminate\Http\Request;
 
 class PemutakhiranController extends Controller
 {
-    public function index() 
+    public function index(Request $request) //search
     {
-        $data = PemutakhiranData::all();
+        $query = PemutakhiranData::query();
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama_usaha', 'like', "%$search%")
+                ->orWhere('kelurahan', 'like', "%$search%")
+                ->orWhere('kategori_usaha', 'like', "%$search%");
+            });
+        }
+
+        $data = $query->paginate(10); // jika pakai pagination
         return view('pemutakhiran.index', compact('data'));
     }
 
@@ -27,8 +38,8 @@ return view('pemutakhiran.create', compact('prefill'));
             'rw' => 'required|string',
             'rt' => 'required|string',
             'nama_usaha' => 'required|string',
-            'nama_pemilik' => 'required|string',
-            'alamat_usaha' => 'required|string',
+            'nama_pemilik' => 'nullable|string',
+            'alamat_usaha' => 'nullable|string',
             'deskripsi_usaha' => 'required|string',
             'kategori_usaha' => 'required|string',
             'catatan' => 'nullable|string',

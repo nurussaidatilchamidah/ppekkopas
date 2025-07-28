@@ -50,7 +50,11 @@
                     <label for="kategori_usaha" class="form-label">Kategori Usaha<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
                     <select name="kategori_usaha" class="form-control" required>
                         <option value="">-- Pilih Kategori Usaha --</option>
-                        @foreach(['Pertanian, Kehutanan, dan Perikanan', 'Pertambangan dan Penggalian', 'Industri Pengolahan', 'Pengadaan Listrik dan Gas', 'Pengadaan Air; Pengelolaan Sampah, Limbah, dan Daur Ulang','Konstruksi', 'Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor', 'Transportasi dan Pergudangan/Transportation and Storage', 'Penyediaan Akomodasi dan Makan Minum','Informasi dan Komunikasi','Jasa Keuangan dan Asuransi','Real Estate','Jasa Perusahaan','Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib','Jasa Pendidikan','Jasa Kesehatan dan Kegiatan Sosial','Jasa Lainnya'] as $item)
+                        @foreach(['A. Pertanian, Kehutanan, dan Perikanan', 'B. Pertambangan dan Penggalian', 'C. Industri Pengolahan', 'D. Pengadaan Listrik, Gas, Uap/Air Panas dan Udara Dingin', 'E. Pengadaan Air, Pengelolaan Sampah, Limbah, dan Daur Ulang',
+                        'F. Konstruksi', 'G. Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor', 'H. Transportasi dan Pergudangan', 'I. Penyediaan Akomodasi dan Makan Minum',
+                        'J. Informasi dan Komunikasi','K. Jasa Keuangan dan Asuransi','L. Real Estat','M. Aktivitas Profesional, Ilmiah, dan Teknis','N. Aktivitas Penyewaan dan Sewa Guna Usaha tanpa Hak Opsi, Ketenagakerjaan, Agen Perjalanan dan Penunjang Usaha Lainnya',
+                        'O. Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib','P. Jasa Pendidikan', 
+                        'Q. Jasa Kesehatan dan Kegiatan Sosial','R. Kesenian, Hiburan, dan Rekreasi', 'S. Aktivitas Jasa Lainnya'] as $item)
                             <option value="{{ $item }}" {{ $data->kategori_usaha == $item ? 'selected' : '' }}>{{ $item }}</option>
                         @endforeach
                     </select>
@@ -88,10 +92,16 @@
                     <input type="hidden" name="nilai_aset_mesin_dan_alat_produksi_lain" id="nilai_aset_mesin_alat_hidden">
                 </div>
 
-                <div class="mb-3">
-                    <label for="izin_usaha" class="form-label">Izin Usaha</label>
-                    <input type="text" name="izin_usaha" class="form-control" value="{{ old('izin_usaha', $data->izin_usaha) }}">
-                </div>
+        <div class="mb-3">
+            <label for="bentukusaha" class="form-label">Bentuk Badan Usaha<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
+            <select name="izin_usaha" class="form-control" required>
+                <option value="" disabled selected>-- Pilih Bentuk Badan Usaha --</option>
+                @foreach(['Perseroan (PT/NV, PT Persero, PT Tbk, Pt Persero Tbk, Perseroan Daerah, Perseroan Perorangan','Yayasan',
+                    'Koperasi','BUMKel','Persekutuan Komanditer (CV)','Persekutuan Firma','Usaha Orang/Perseorangan'] as $item)
+                    <option value="{{ $item }}">{{ $item }}</option>
+                @endforeach 
+            </select>
+        </div>
 
                 <div class="mb-3">
                     <label for="catatan" class="form-label">Catatan</label>

@@ -81,24 +81,13 @@
             <label for="kategori_usaha" class="form-label">Kategori Usaha<span class="text-danger fw-bold" style="font-size: 1.3em;">*</span></label>
             <select name="kategori_usaha" class="form-control" required>
                 <option value="" disabled {{ old('kategori_usaha') ? '' : 'selected' }}>-- Pilih Kategori Usaha --</option>
-                @foreach([
-                    'Pertanian, Kehutanan, dan Perikanan',
-                    'Pertambangan dan Penggalian',
-                    'Industri Pengolahan',
-                    'Pengadaan Listrik dan Gas',
-                    'Pengadaan Air, Pengelolaan Sampah, Limbah, dan Daur Ulang',
-                    'Konstruksi',
-                    'Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor',
-                    'Transportasi dan Pergudangan/Transportation and Storage',
-                    'Penyediaan Akomodasi dan Makan Minum',
-                    'Informasi dan Komunikasi',
-                    'Jasa Keuangan dan Asuransi',
-                    'Real Estate',
-                    'Jasa Perusahaan',
-                    'Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib',
-                    'Jasa Pendidikan',
-                    'Jasa Kesehatan dan Kegiatan Sosial',
-                    'Jasa Lainnya'
+                @foreach(
+                ['A. Pertanian, Kehutanan, dan Perikanan', 'B. Pertambangan dan Penggalian', 'C. Industri Pengolahan', 'D. Pengadaan Listrik, Gas, Uap/Air Panas dan Udara Dingin', 'E. Pengadaan Air, Pengelolaan Sampah, Limbah, dan Daur Ulang',
+                'F. Konstruksi', 'G. Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor', 'H. Transportasi dan Pergudangan', 'I. Penyediaan Akomodasi dan Makan Minum',
+                'J. Informasi dan Komunikasi','K. Jasa Keuangan dan Asuransi','L. Real Estat','M. Aktivitas Profesional, Ilmiah, dan Teknis','N. Aktivitas Penyewaan dan Sewa Guna Usaha tanpa Hak Opsi, Ketenagakerjaan, 
+                Agen Perjalanan dan Penunjang Usaha Lainnya',
+                 'O. Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib','P. Jasa Pendidikan', 
+                'Q. Jasa Kesehatan dan Kegiatan Sosial','R. Kesenian, Hiburan, dan Rekreasi', 'S. Aktivitas Jasa Lainnya'
                 ] as $item)
                 <option value="{{ $item }}" {{ session('prefill_pendataan.kategori_usaha') == $item ? 'selected' : '' }}>{{ $item }}</option>
                 @endforeach
