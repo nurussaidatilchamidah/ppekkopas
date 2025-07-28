@@ -78,7 +78,7 @@
     <div class="col-md-6">
     <div class="mb-3">
          <label for="pendapatan"> Pendapatan/Omset per Tahun<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
-        <input type="text" id="pendapatan" class="form-control" required placeholder="Pendapatan per tahun minimal Rp.100.000">
+        <input type="text" id="pendapatan" class="form-control" placeholder="Pendapatan per tahun minimal Rp.100.000">
         <input type="hidden" name="pendapatan_per_bulan" id="pendapatan_hidden">
     </div>
 
@@ -113,7 +113,7 @@
    
      <div class="mb-3">
          <label for="catatan">Catatan </label>
-        <input type="longtext" name="catatan" class="form-control" required placeholder="Catatan tidak wajib diisi (opsional)">
+        <input type="longtext" name="catatan" class="form-control" placeholder="Catatan tidak wajib diisi (opsional)">
     </div>
 </div>
 

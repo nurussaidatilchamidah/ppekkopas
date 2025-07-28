@@ -61,7 +61,7 @@
 
     <div class="mb-3">
          <label for="rt">Nama Pemilik</label>
-        <input type="text" name="nama_pemilik" class="form-control" required placeholder="Nama pemilik tidak wajib diisi">
+        <input type="text" name="nama_pemilik" class="form-control" placeholder="Nama pemilik tidak wajib diisi">
     </div>
 </div>
 
@@ -69,7 +69,7 @@
     <div class="col-md-6">
     <div class="mb-3">
          <label for="rt"> Alamat Usaha</label>
-        <input type="text" name="alamat_usaha" class="form-control" required placeholder="Alamat usaha tidak wajib diisi">
+        <input type="text" name="alamat_usaha" class="form-control" placeholder="Alamat usaha tidak wajib diisi">
     </div>
 
      <div class="mb-3">
@@ -96,7 +96,7 @@
 
      <div class="mb-3">
          <label for="rt">Catatan</label>
-        <input type="longtext" name="catatan" class="form-control" required placeholder="Catatan tidak wajib diisi">
+        <input type="longtext" name="catatan" class="form-control" placeholder="Catatan tidak wajib diisi">
     </div>
 
         <div class="mb-3">

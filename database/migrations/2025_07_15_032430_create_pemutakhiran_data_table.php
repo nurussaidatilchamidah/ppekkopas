@@ -14,11 +14,11 @@ return new class extends Migration
             $table->string('rw');
             $table->string('rt');
             $table->string('nama_usaha');
-            $table->string('nama_pemilik');
-            $table->string('alamat_usaha');
+            $table->string('nama_pemilik')->nullable();
+            $table->string('alamat_usaha')->nullable();
             $table->text('deskripsi_usaha');
             $table->string('kategori_usaha');
-            $table->longText('catatan');
+            $table->longText('catatan')->nullable();
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->timestamps();
