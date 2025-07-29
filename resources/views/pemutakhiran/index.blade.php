@@ -148,6 +148,10 @@
     <div class="d-flex justify-content-center">
         {{ $data->withQueryString()->links() }}
     </div>
-
 </div>
+
+<!-- kembali -->
+     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
+    </div>
 @endsection

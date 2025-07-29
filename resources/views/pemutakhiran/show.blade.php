@@ -18,8 +18,14 @@
     </table>
 
         <h5 class="mt-4">Lokasi Usaha:</h5>
-    <div id="map"></div>
+    <div class="my-3">
+      <button id="btn-center-map" class="btn btn-outline-primary mb-2">📍 Buka dengan Gmaps</button>
+      <div id="map"></div>
+    </div>
 </div>
+    <div class="d-flex justify-content-between mt-3">
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
+    </div>
 
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -51,8 +57,14 @@
             .bindPopup("Lokasi Usaha")
             .openPopup();
     });
+
+    document.getElementById("btn-center-map").addEventListener("click", function () {
+    var lat = {{ $data->latitude ?? 0 }};
+    var lng = {{ $data->longitude ?? 0 }};
+    var url = `https://www.google.com/maps?q=${lat},${lng}`;
+    window.open(url, '_blank');
+    });
 </script>
 
-    <a href="{{ route('pemutakhiran.index') }}" class="btn btn-secondary mt-5">Kembali</a>
-</div>
+
 @endsection

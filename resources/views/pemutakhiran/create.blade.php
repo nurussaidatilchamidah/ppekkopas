@@ -110,99 +110,132 @@
 </div>
 </div>
 
-        <script>
-            function getLocation() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(showPosition, showError);
-                } else {
-                    alert("Browser Anda tidak mendukung Geolocation.");
-                }
+<div class="my-3">
+    <button id="btn-center-map" class="btn btn-outline-primary mb-2">📍 Pusatkan ke Lokasi Saya</button>
+    <div id="map"></div>
+</div>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    
+    <script>
+    let marker; // global marker
+    let map; // global map
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            alert("Browser Anda tidak mendukung Geolocation.");
+        }
+    }
+
+    function showPosition(position) {
+        const lat = position.coords.latitude.toFixed(6);
+        const lng = position.coords.longitude.toFixed(6);
+        const latlng = `${lat},${lng}`;
+        document.getElementById("latlong").value = latlng;
+
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker([lat, lng]).addTo(map);
+        map.flyTo([lat, lng], 16, {
+        animate: true,
+        duration: 1.5 // durasi animasi dalam detik
+    });
+}
+
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User menolak permintaan geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Informasi lokasi tidak tersedia.");
+                break;
+            case error.TIMEOUT:
+                alert("Permintaan lokasi melebihi batas waktu.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("Terjadi kesalahan yang tidak diketahui.");
+                break;
+        }
+    }
+
+    // Inisialisasi peta setelah DOM siap
+    document.addEventListener("DOMContentLoaded", function() {
+        map = L.map('map').setView([-7.6450, 112.9076], 13); // Lokasi awal
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        map.on('click', function(e) {
+            var lat = e.latlng.lat.toFixed(6);
+            var lng = e.latlng.lng.toFixed(6);
+            var latlng = lat + ',' + lng;
+
+            document.getElementById('latlong').value = latlng;
+
+            if (marker) {
+                map.removeLayer(marker);
             }
 
-            function showPosition(position) {
-                const lat = position.coords.latitude;
-                const long = position.coords.longitude;
-                document.getElementById("latlong").value = `${lat},${long}`;
+            marker = L.marker([lat, lng]).addTo(map);
+        });
+
+        document.getElementById('btn-center-map').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude.toFixed(6);
+                    const lng = position.coords.longitude.toFixed(6);
+                    map.flyTo([lat, lng], 16, {
+                    animate: true,
+                    duration: 1.5
+                });
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+                    marker = L.marker([lat, lng]).addTo(map);
+                    document.getElementById('latlong').value = `${lat},${lng}`;
+                }, showError);
+            } else {
+                alert("Browser Anda tidak mendukung Geolocation.");
             }
-
-            function showError(error) {
-                switch(error.code) {
-                    case error.PERMISSION_DENIED:
-                        alert("User menolak permintaan geolocation.");
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        alert("Informasi lokasi tidak tersedia.");
-                        break;
-                    case error.TIMEOUT:
-                        alert("Permintaan lokasi melebihi batas waktu.");
-                        break;
-                    case error.UNKNOWN_ERROR:
-                        alert("Terjadi kesalahan yang tidak diketahui.");
-                        break;
-                }
-            }
-        </script>
-
-        <!-- Leaflet CSS -->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-        <!-- Leaflet JS -->
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        });
+    });
+</script>
 
         <style>
-            #map {
-                height: 300px;
-                width: 100%;
-                margin-bottom: 1rem;
-            }
+           #map {
+        height: 300px;
+        width: 100%;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+    }
+            
+        ::placeholder {
+            font-style: italic;
+            color: #cfd8e0ff;
+            font-size: 0.8em;
+        }
+
+        #btn-center-map {
+            display: inline-block;
+        }
         </style>
-
-        <div id="map"></div>
-
-        <script>
-            // Inisialisasi map
-            var map = L.map('map').setView([-7.6450, 112.9076], 13);// Ganti dengan lokasi default kamu
-
-            // Tambahkan tile layer (peta dasar)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
-
-            var marker;
-
-            // Tangkap event saat peta di-klik
-            map.on('click', function(e) {
-                var lat = e.latlng.lat.toFixed(6);
-                var lng = e.latlng.lng.toFixed(6);
-                var latlng = lat + ',' + lng;
-
-                // Isi input latlong
-                document.getElementById('latlong').value = latlng;
-
-                // Hapus marker sebelumnya jika ada
-                if (marker) {
-                    map.removeLayer(marker);
-                }
-
-                // Tambahkan marker di lokasi yang diklik
-                marker = L.marker([lat, lng]).addTo(map);
-            });
-        </script>
+        
 
         <div class="d-flex justify-content-between mt-3">
             <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
             <button type="submit" class="btn btn-success">Simpan</button>
         </div>
-
-
-    </form>
 </div>
+</form>
 
-<style>
-    ::placeholder {
-        font-style: italic;
-        color: #cfd8e0ff;
-        font-size: 0.8em;
-    }
-</style>
 @endsection

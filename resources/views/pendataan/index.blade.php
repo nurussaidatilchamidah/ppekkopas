@@ -153,4 +153,8 @@ placeholder="Cari berdasarkan kelurahan, nama usaha atau kategori usaha....."   
     </div>
 
 </div>
+<!-- kembali -->
+     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
+    </div>
 @endsection
