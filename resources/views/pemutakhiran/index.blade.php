@@ -75,12 +75,6 @@
     .btn-warning:hover {
         background-color: #ec971f;
         border-color: #d58512;
-        padding: 2px 14px;
-        font-size: 17px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 </style>
 
@@ -149,7 +143,6 @@
         {{ $data->withQueryString()->links() }}
     </div>
 </div>
-
 <!-- kembali -->
      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
                 <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>

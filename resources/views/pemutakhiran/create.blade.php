@@ -110,10 +110,7 @@
 </div>
 </div>
 
-<div class="my-3">
-    <button id="btn-center-map" class="btn btn-outline-primary mb-2">📍 Pusatkan ke Lokasi Saya</button>
-    <div id="map"></div>
-</div>
+<div id="map"></div>
 
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -186,26 +183,6 @@
             }
 
             marker = L.marker([lat, lng]).addTo(map);
-        });
-
-        document.getElementById('btn-center-map').addEventListener('click', function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    const lat = position.coords.latitude.toFixed(6);
-                    const lng = position.coords.longitude.toFixed(6);
-                    map.flyTo([lat, lng], 16, {
-                    animate: true,
-                    duration: 1.5
-                });
-                    if (marker) {
-                        map.removeLayer(marker);
-                    }
-                    marker = L.marker([lat, lng]).addTo(map);
-                    document.getElementById('latlong').value = `${lat},${lng}`;
-                }, showError);
-            } else {
-                alert("Browser Anda tidak mendukung Geolocation.");
-            }
         });
     });
 </script>

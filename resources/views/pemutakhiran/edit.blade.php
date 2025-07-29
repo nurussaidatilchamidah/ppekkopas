@@ -55,7 +55,7 @@
 
                 <div class="mb-3">
                     <label for="nama_pemilik" class="form-label">Nama Pemilik</label>
-                    <input type="text" name="nama_pemilik" class="form-control" value="{{ $data->nama_pemilik }}" required>
+                    <input type="text" name="nama_pemilik" class="form-control" value="{{ $data->nama_pemilik }}">
                 </div>
             </div>
 
@@ -63,7 +63,7 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="alamat_usaha" class="form-label">Alamat Usaha</label>
-                    <input type="text" name="alamat_usaha" class="form-control" value="{{ $data->alamat_usaha }}" required>
+                    <input type="text" name="alamat_usaha" class="form-control" value="{{ $data->alamat_usaha }}">
                 </div>
 
                 <div class="mb-3">
@@ -149,7 +149,21 @@
         const lat = position.coords.latitude;
         const long = position.coords.longitude;
         document.getElementById("latlong").value = `${lat},${long}`;
+    
+    
+        // Zoom ke lokasi baru
+    map.flyTo([lat, long], 16, {
+        animate: true,
+        duration: 1.5
+    });
+
+    // Update marker
+    if (marker) {
+        map.removeLayer(marker);
     }
+
+    marker = L.marker([lat, long]).addTo(map);
+}
 
     function showError(error) {
         switch(error.code) {

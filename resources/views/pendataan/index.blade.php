@@ -75,12 +75,6 @@
     .btn-warning:hover {
         background-color: #ec971f;
         border-color: #d58512;
-        padding: 2px 14px;
-        font-size: 17px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 
 </style>
@@ -91,7 +85,8 @@
             type="text" 
             name="search" 
             class="form-control custom-search-input" 
-placeholder="Cari berdasarkan kelurahan, nama usaha atau kategori usaha....."             value="{{ request('search') }}"
+placeholder="Cari berdasarkan kelurahan, nama usaha atau kategori usaha....."             
+value="{{ request('search') }}"
             style="min-width: 300px;">
         <button class="btn btn-warning text-white" type="submit" title="Cari">
             <i class="fas fa-search"></i>
@@ -151,10 +146,10 @@ placeholder="Cari berdasarkan kelurahan, nama usaha atau kategori usaha....."   
     <div class="d-flex justify-content-center">
         {{ $data->withQueryString()->links() }}
     </div>
-
+ 
 </div>
 <!-- kembali -->
      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
-                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
-    </div>
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
+     </div>
 @endsection

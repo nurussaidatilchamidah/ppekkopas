@@ -98,7 +98,9 @@
                 <option value="" disabled selected>-- Pilih Bentuk Badan Usaha --</option>
                 @foreach(['Perseroan (PT/NV, PT Persero, PT Tbk, Pt Persero Tbk, Perseroan Daerah, Perseroan Perorangan','Yayasan',
                     'Koperasi','BUMKel','Persekutuan Komanditer (CV)','Persekutuan Firma','Usaha Orang/Perseorangan'] as $item)
-                    <option value="{{ $item }}">{{ $item }}</option>
+                    <option value="{{ $item }}" {{ (old('izin_usaha', $data->izin_usaha ?? '') == $item) ? 'selected' : '' }}>
+                        {{ $item }}
+                    </option>
                 @endforeach 
             </select>
         </div>
