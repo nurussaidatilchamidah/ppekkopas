@@ -27,3 +27,5 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+// Route untuk rekap pemutakhiran
+Route::get('/rekap-pemutakhiran', [PemutakhiranController::class, 'rekap'])->name('pemutakhiran.rekap');

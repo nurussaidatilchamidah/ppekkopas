@@ -132,11 +132,11 @@ session([
         'longitude' => $longitude,
     ]);
 
-    return redirect()->route('dashboard')->with('success', 'Data berhasil diperbarui.');
+    return redirect()->route('pemutakhiran.index')->with('success', 'Data berhasil diperbarui.');
     }
 
 
-    public function show($id)
+        public function show($id)
     {
         $data = PemutakhiranData::findOrFail($id);
         return view('pemutakhiran.show', compact('data'));
@@ -149,4 +149,38 @@ session([
 
         return redirect()->route('pemutakhiran.index')->with('success', 'Data berhasil dihapus.');
     }
+
+        public function rekap()
+    {
+
+        $kelurahanFilter = ['Randusari', 'Gentong', 'Pohjentrek', 'Mandaranrejo'];
+
+        // Hanya kelurahan tertentu, langsung pakai collection
+        $dataKelurahan = collect($kelurahanFilter);
+
+        $rekapPerKelurahan = PemutakhiranData::select('kelurahan', \DB::raw('COUNT(*) as total'))
+            ->whereIn('kelurahan', $kelurahanFilter)
+            ->groupBy('kelurahan')
+            ->get();
+
+        $rekapKategori = PemutakhiranData::select('kelurahan', 'kategori_usaha', \DB::raw('COUNT(*) as total'))
+            ->whereIn('kelurahan', $kelurahanFilter)
+            ->groupBy('kelurahan', 'kategori_usaha')
+            ->get()
+            ->groupBy('kelurahan');
+
+        $rekapRTRW = PemutakhiranData::select('kelurahan', 'rw', 'rt', \DB::raw('COUNT(*) as total'))
+            ->whereIn('kelurahan', $kelurahanFilter)
+            ->groupBy('kelurahan', 'rw', 'rt')
+            ->get()
+            ->groupBy('kelurahan');
+
+        return view('pemutakhiran.rekap', compact(
+            'dataKelurahan',
+            'rekapPerKelurahan',
+            'rekapKategori',
+            'rekapRTRW'
+        ));
+    }
+
 }

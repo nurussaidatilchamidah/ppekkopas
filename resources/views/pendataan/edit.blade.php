@@ -15,7 +15,7 @@
                     <label for="kelurahan" class="form-label">Kelurahan<span class="text-danger" fw-bold style="font-size: 1.3em;">*</span></label>
                     <select name="kelurahan" class="form-control" required>
                         <option value="">-- Pilih Kelurahan --</option>
-                        @foreach(['Krapyakrejo','Bukir','Sebani','Gentong','Gadingrejo','Randusari','Petahunan','Karangketug','Pohjentrek','Wirogunan','Tembokrejo','Purutrejo','Kebonagung','Purworejo','Sekargadung','Blandongan','Bakalan','Krampyangan','Bungulkidul','Kepel','Tapaan','Pekucen','Pertamanan','Bungullor','Kandangsapi','Bangilan','Kebonsari','Karanganyar','Trajeng','Mayangan','Panggungrejo','Madaranrejo','Ngemplakrejo','Tambaan'] as $item)
+                        @foreach(['Krapyakrejo','Bukir','Sebani','Gentong','Gadingrejo','Randusari','Petahunan','Karangketug','Pohjentrek','Wirogunan','Tembokrejo','Purutrejo','Kebonagung','Purworejo','Sekargadung','Blandongan','Bakalan','Krampyangan','Bungulkidul','Kepel','Tapaan','Pekucen','Pertamanan','Bungullor','Kandangsapi','Bangilan','Kebonsari','Karanganyar','Trajeng','Mayangan','Panggungrejo','Mandaranrejo','Ngemplakrejo','Tambaan'] as $item)
                             <option value="{{ $item }}" {{ $data->kelurahan == $item ? 'selected' : '' }}>{{ $item }}</option>
                         @endforeach
                     </select>

@@ -19,7 +19,7 @@
                             'Petahunan','Karangketug','Pohjentrek','Wirogunan','Tembokrejo','Purutrejo',
                             'Kebonagung','Purworejo','Sekargadung','Blandongan','Bakalan','Krampyangan',
                             'Bungulkidul','Kepel','Tapaan','Pekucen','Pertamanan','Bungullor','Kandangsapi',
-                            'Bangilan','Kebonsari','Karanganyar','Trajeng','Mayangan','Panggungrejo','Madaranrejo',
+                            'Bangilan','Kebonsari','Karanganyar','Trajeng','Mayangan','Panggungrejo','Mandaranrejo',
                             'Ngemplakrejo','Tambaan'
                         ] as $item)
                             <option value="{{ $item }}" {{ $data->kelurahan == $item ? 'selected' : '' }}>{{ $item }}</option>

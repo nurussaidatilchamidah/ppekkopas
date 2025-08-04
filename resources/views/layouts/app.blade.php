@@ -198,6 +198,7 @@
 
         <!-- Normal menu di layar besar -->
         <div class="d-none d-lg-flex gap-3 nav-link">
+            <a class="text-white fw-semibold me-4" href="{{ route('pemutakhiran.rekap') }}">Rekapitulasi</a>
             <a class="text-white fw-semibold me-4" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>
             <a class="text-white fw-semibold" href="{{ route('pendataan.index') }}">Pendataan</a>
         </div>
@@ -212,6 +213,9 @@
     </div>
     <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+                <a class="nav-link fw-semibold" style="font-size: 1.05rem;" href="{{ route('pemutakhiran.rekap') }}">Rekapitulasi</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link fw-semibold" style="font-size: 1.05rem;" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>
             </li>

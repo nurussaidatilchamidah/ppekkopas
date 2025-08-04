@@ -19,7 +19,7 @@
                     'Petahunan','Karangketug','Pohjentrek','Wirogunan','Tembokrejo','Purutrejo',
                     'Kebonagung','Purworejo','Sekargadung','Blandongan','Bakalan','Krampyangan',
                     'Bugulkidul','Kepel','Tapaan','Pekucen','Pertamanan','Bugullor','Kandangsapi',
-                    'Bangilan','Kebonsari','Karanganyar','Trajeng','Mayangan','Panggungrejo','Madaranrejo',
+                    'Bangilan','Kebonsari','Karanganyar','Trajeng','Mayangan','Panggungrejo','Mandaranrejo',
                     'Ngemplakrejo','Tambaan'
                 ] as $item)
                     <option value="{{ $item }}" {{ session('prefill_pendataan.kelurahan') == $item ? 'selected' : '' }}>{{ $item }}</option>

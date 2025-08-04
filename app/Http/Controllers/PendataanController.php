@@ -158,7 +158,7 @@ session([
             'longitude' => $longitude,
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('pendataan.index')->with('success', 'Data berhasil diperbarui.');
     }
 
     // Hapus data
