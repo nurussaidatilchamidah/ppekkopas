@@ -20,8 +20,18 @@ class PemutakhiranController extends Controller
             });
         }
 
-        $data = $query->paginate(10); // jika pakai pagination
-        return view('pemutakhiran.index', compact('data'));
+        $perPage = $request->get('per_page', 10); // default: 10
+
+   if ($perPage === 'all') {
+        $data = $query->orderBy('created_at', 'desc')->get();
+        $isPaginated = false;
+    } else {
+        $perPage = (int) $perPage;
+        $data = $query->orderBy('created_at', 'desc')->paginate($perPage)->withQueryString();
+        $isPaginated = true;
+    }
+
+    return view('pemutakhiran.index', compact('data', 'perPage', 'isPaginated'));
     }
 
     public function create()
@@ -29,7 +39,7 @@ class PemutakhiranController extends Controller
         $prefill = session('prefill_data', []);
 return view('pemutakhiran.create', compact('prefill'));
 
-    }//menambahkan prefil
+    }
 
     public function store(Request $request)
     {
@@ -65,7 +75,7 @@ return view('pemutakhiran.create', compact('prefill'));
             'longitude' => $longitude,
         ]);
 
-        // ✅ SET SESSION UNTUK PREFILL PADA PENDAATAAN
+        //  SET SESSION UNTUK PREFILL PADA PENDAATAAN
 session([
     'prefill_pendataan' => [
         'kelurahan' => $request->kelurahan,

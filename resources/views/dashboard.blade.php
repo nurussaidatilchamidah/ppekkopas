@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div class="background-blob blob-orange-top"></div>
+<div class="background-blob blob-orange-bottom"></div>
+
 <h2 class="mb-5 text-center fw-bold mt-5" style="font-size: 2.2rem;">
     Selamat Datang di Aplikasi SUROPATI <br>
     (Survei Potensi dan Pemetaan Usaha Ekonomi)

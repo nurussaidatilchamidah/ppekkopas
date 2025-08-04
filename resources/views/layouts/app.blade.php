@@ -21,12 +21,48 @@
             --bps-orange-light: #FFB84D;
         }
         
-            .navbar-nav .nav-link {
+        .navbar-nav {
             padding: 0.5rem 1rem;
             font-size: 1rem;
             font-weight: 500;
         }
-        
+            
+        .nav-link {
+            padding: 1rem 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link a {
+            text-decoration: none;
+            color: #e3e7ebff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link a:hover {
+            color: #f5f2efff;
+        }
+
+        .nav-link a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #ebeceeff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link a:hover::after {
+            width: 100%;
+        }
+
         .btn-bps-primary {
             background: linear-gradient(135deg, var(--bps-blue) 0%, var(--bps-blue-light) 100%);
             border: none;
@@ -94,7 +130,44 @@
             z-index: 1060 !important; /* pastikan di atas */
             position: relative;
         }
+    /* background 8 */
+  body {
+    background-color: #ffffff;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+  }
 
+  .background-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.2;
+    z-index: 0;
+  }
+
+  .blob-orange-top {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #ff9800, #fb8c00);
+    top: -150px;
+    left: -150px;
+  }
+
+  .blob-orange-bottom {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #ffcc80, #ff9800);
+    bottom: -100px;
+    right: -120px;
+  }
+
+  .container, .card {
+    position: relative;
+    z-index: 10;
+  }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">    
         
     </style>
 </head>
@@ -124,9 +197,9 @@
         </button>
 
         <!-- Normal menu di layar besar -->
-        <div class="d-none d-lg-flex gap-3">
-            <a class="nav-link text-white fw-semibold" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>
-            <a class="nav-link text-white fw-semibold" href="{{ route('pendataan.index') }}">Pendataan</a>
+        <div class="d-none d-lg-flex gap-3 nav-link">
+            <a class="text-white fw-semibold me-4" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>
+            <a class="text-white fw-semibold" href="{{ route('pendataan.index') }}">Pendataan</a>
         </div>
     </div>
 </nav>

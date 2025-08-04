@@ -24,26 +24,24 @@ class PendataanExportController extends Controller
         $callback = function() use ($data) {
             $file = fopen('php://output', 'w');
             // Sesuaikan header CSV dengan kolom pada tabel kamu
-            fputcsv($file, ['kelurahan', 'rw', 'rt' ,'nama_usaha', 'kategori_usaha', 'jumlah_tenaga_kerja','pendapatan_per_bulan','pengeluaran_operasional','nilai_aset_gedung_dan_kendaraan', 'nilai_aset_mesin_dan_alat_produksi_lain','izin_usaha','catatan','latlong', 'latitude','longitude']);
+            fputcsv($file, ['kelurahan', 'rw', 'rt' ,'nama_usaha', 'kategori_usaha', 'jumlah_tenaga_kerja','pendapatan_per_tahun','pengeluaran_operasional','nilai_aset_gedung_dan_kendaraan', 'nilai_aset_mesin_dan_alat_produksi_lain','izin_usaha','catatan','latlong', 'latitude','longitude']);
             foreach ($data as $row) {
                 fputcsv($file, [
+                    $row->id,
                     $row->kelurahan,
                     $row->rw,
                     $row->rt,
                     $row->nama_usaha,
                     $row->kategori_usaha,
-                    $row->jumlah_usaha,
+                 //   $row->jumlah_usaha,
                     $row->jumlah_tenaga_kerja,
-                    $row->pendapatan_per_bulan,
+                    $row->pendapatan_per_tahun,
                     $row->pengeluaran_operasional,
                     $row->nilai_aset_gedung_dan_kendaraan,
                     $row->nilai_aset_mesin_dan_alat_produksi_lain,
                     $row->izin_usaha,
-                    $row->jumlah_tenaga_kerja,
+                 //   $row->jumlah_tenaga_kerja,
                     $row->catatan,
-                    $row->latlong,
-                    $row->latitude,
-                    $row->longitude,
                 ]);
             }
             fclose($file);

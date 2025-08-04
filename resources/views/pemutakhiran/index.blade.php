@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+
+@php
+    $perPage = $perPage ?? (is_object($data) && method_exists($data, 'perPage') ? $data->perPage() : 'all');
+    $isPaginated = $isPaginated ?? (is_object($data) && method_exists($data, 'links'));
+@endphp
+
 <div class="container mt-5">
     <h2 class="mb-4 fw-bold">Data Pemutakhiran Usaha</h2>
    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
@@ -14,7 +20,6 @@
 
     
 <style>
-    <style>
     .title-text {
         font-size: 26px;
         font-weight: bold;
@@ -76,6 +81,22 @@
         background-color: #ec971f;
         border-color: #d58512;
     }
+
+    .pagination {
+        height: 40px; /* sama seperti btn dan select default */
+        display: flex;
+        align-items: center;
+    }
+
+    .pagination-wrapper {
+            flex: 1;
+    }
+
+    .page-item .page-link {
+    padding: 0.375rem 0.75rem; /* sesuaikan dengan tombol bootstrap */
+    font-size: 0.9rem;
+    border-radius: 0.375rem;
+}
 </style>
 
 <!-- search -->
@@ -113,7 +134,13 @@
         <tbody>
             @foreach($data as $index => $item)
             <tr>
-                <td>{{ $loop->iteration }}</td> 
+                <td class="text-center">
+                    @if($isPaginated)
+                        {{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}
+                    @else
+                        {{ $loop->iteration }}
+                    @endif
+                </td>
                 <td>{{ $item->kelurahan }}</td>
                 <td>{{ $item->rw }}</td>
                 <td>{{ $item->rt }}</td>
@@ -137,14 +164,49 @@
             @endforeach
         </tbody>
     </table>
+</div>
 
-    <!-- pagination -->
-    <div class="d-flex justify-content-center">
-        {{ $data->withQueryString()->links() }}
+@php
+    if ($isPaginated) {
+        $from = ($data->currentPage() - 1) * $data->perPage() + 1;
+        $to = min($data->currentPage() * $data->perPage(), $data->total());
+        $total = $data->total();
+    } else {
+        $from = $data->count() ? 1 : 0;
+        $to = $data->count();
+        $total = $data->count();
+    }
+@endphp
+
+<div class="d-flex align-items-center mt-2 w-100">
+    <!-- kiri: dropdown per page -->
+    <div>
+        <form action="{{ route('pemutakhiran.index') }}" method="GET" class="d-flex align-items-center">
+            <label for="per_page" class="me-2 mb-0 fw-bold fs-17px">Tampilkan</label>
+            <select name="per_page" id="per_page" class="form-select me-2" onchange="this.form.submit()" style="max-width: 200px;">
+                <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
+                <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                <option value="all" {{ $perPage === 'all' ? 'selected' : '' }}>Semua</option>
+            </select>
+            <input type="hidden" name="search" value="{{ request('search') }}">
+        </form>
+    </div>
+
+    <!-- tengah: pagination -->
+    <div class="flex-grow-1 d-flex flex-column align-items-center" style="padding-top: 16px;">
+        @if ($isPaginated)
+            {{ $data->withQueryString()->links() }}
+        @endif
+        <div style="font-size: 0.9rem; text-align: center">
+            Menampilkan {{ $from }} sampai {{ $to }} dari {{ $total }} hasil
+        </div>
+    </div>
+
+    <!-- kanan: tombol kembali -->
+    <div class="ms-auto">
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
     </div>
 </div>
-<!-- kembali -->
-     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
-                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
-    </div>
+
 @endsection
