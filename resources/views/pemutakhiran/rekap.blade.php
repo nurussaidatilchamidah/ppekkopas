@@ -174,6 +174,55 @@
     </div>
 </div>
 
+{{-- PETA INTERAKTIF (LEAFLET)  --}}
+
+<style>
+    #map {
+        width: 1200px;
+        height: 500px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 20px; /* jarak ke bawah */
+    }       
+</style>
+
+<div class="container mt-5">
+    <h4 class="mb-4 fw-bold text-center" style="font-size: 1.2rem;">Peta Sebaran Usaha</h4>
+
+    <div class="d-flex justify-content-center mb-5">
+        <div id="map" class="rounded shadow-sm"></div>
+    </div>
+</div>
+
+{{-- Leaflet CSS --}}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+{{-- Leaflet JS --}}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    // Inisialisasi Peta
+    const map = L.map('map').setView([-7.640597, 112.911583], 13); // Pusat di Pasuruan
+
+    // Tambah Layer Peta OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Data lokasi usaha dari PHP
+    const dataUsaha = @json($lokasiUsaha);
+
+    // Tambahkan marker
+    dataUsaha.forEach(item => {
+        if (item.latitude && item.longitude) {
+            const marker = L.marker([item.latitude, item.longitude]).addTo(map);
+            const linkMaps = `https://www.google.com/maps?q=${item.latitude},${item.longitude}`;
+
+            marker.bindPopup(`<strong>${item.nama_usaha}</strong><br><a href="${linkMaps}" target="_blank">📍 Lihat di Google Maps</a>`);
+        }
+    });
+</script>
+
 <!-- kanan: tombol kembali -->
     <div class="d-flex justify-content-end mt-3">
         <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>

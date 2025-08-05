@@ -149,38 +149,46 @@ session([
 
         return redirect()->route('pemutakhiran.index')->with('success', 'Data berhasil dihapus.');
     }
+public function rekap()
+{
+    $kelurahanFilter = ['Randusari', 'Gentong', 'Pohjentrek', 'Mandaranrejo'];
 
-        public function rekap()
-    {
+    $dataKelurahan = collect($kelurahanFilter);
 
-        $kelurahanFilter = ['Randusari', 'Gentong', 'Pohjentrek', 'Mandaranrejo'];
+    $rekapPerKelurahan = PemutakhiranData::select('kelurahan', \DB::raw('COUNT(*) as total'))
+        ->whereIn('kelurahan', $kelurahanFilter)
+        ->groupBy('kelurahan')
+        ->get();
 
-        // Hanya kelurahan tertentu, langsung pakai collection
-        $dataKelurahan = collect($kelurahanFilter);
+    $rekapKategori = PemutakhiranData::select('kelurahan', 'kategori_usaha', \DB::raw('COUNT(*) as total'))
+        ->whereIn('kelurahan', $kelurahanFilter)
+        ->groupBy('kelurahan', 'kategori_usaha')
+        ->get()
+        ->groupBy('kelurahan');
 
-        $rekapPerKelurahan = PemutakhiranData::select('kelurahan', \DB::raw('COUNT(*) as total'))
-            ->whereIn('kelurahan', $kelurahanFilter)
-            ->groupBy('kelurahan')
-            ->get();
+    $rekapRTRW = PemutakhiranData::select('kelurahan', 'rw', 'rt', \DB::raw('COUNT(*) as total'))
+        ->whereIn('kelurahan', $kelurahanFilter)
+        ->groupBy('kelurahan', 'rw', 'rt')
+        ->orderBy('kelurahan')
+        ->orderByRaw('CAST(rw AS UNSIGNED)')
+        ->orderByRaw('CAST(rt AS UNSIGNED)')
+        ->get()
+        ->groupBy('kelurahan');
 
-        $rekapKategori = PemutakhiranData::select('kelurahan', 'kategori_usaha', \DB::raw('COUNT(*) as total'))
-            ->whereIn('kelurahan', $kelurahanFilter)
-            ->groupBy('kelurahan', 'kategori_usaha')
-            ->get()
-            ->groupBy('kelurahan');
+    $lokasiUsaha = PemutakhiranData::select('nama_usaha', 'latitude', 'longitude')
+        ->whereIn('kelurahan', $kelurahanFilter)
+        ->whereNotNull('latitude')
+        ->whereNotNull('longitude')
+        ->get();
 
-        $rekapRTRW = PemutakhiranData::select('kelurahan', 'rw', 'rt', \DB::raw('COUNT(*) as total'))
-            ->whereIn('kelurahan', $kelurahanFilter)
-            ->groupBy('kelurahan', 'rw', 'rt')
-            ->get()
-            ->groupBy('kelurahan');
-
-        return view('pemutakhiran.rekap', compact(
-            'dataKelurahan',
-            'rekapPerKelurahan',
-            'rekapKategori',
-            'rekapRTRW'
-        ));
-    }
+    return view('pemutakhiran.rekap', compact(
+        'dataKelurahan',
+        'rekapPerKelurahan',
+        'rekapKategori',
+        'rekapRTRW',
+        'lokasiUsaha'
+    ));
+}        
 
 }
+
