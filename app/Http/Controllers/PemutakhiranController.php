@@ -175,7 +175,7 @@ public function rekap()
         ->get()
         ->groupBy('kelurahan');
 
-    $lokasiUsaha = PemutakhiranData::select('nama_usaha', 'latitude', 'longitude')
+    $lokasiUsaha = PemutakhiranData::select('nama_usaha', 'kelurahan', 'latitude', 'longitude')
         ->whereIn('kelurahan', $kelurahanFilter)
         ->whereNotNull('latitude')
         ->whereNotNull('longitude')

@@ -24,24 +24,26 @@ class PendataanExportController extends Controller
         $callback = function() use ($data) {
             $file = fopen('php://output', 'w');
             // Sesuaikan header CSV dengan kolom pada tabel kamu
-            fputcsv($file, ['kelurahan', 'rw', 'rt' ,'nama_usaha', 'kategori_usaha', 'jumlah_tenaga_kerja','pendapatan_per_tahun','pengeluaran_operasional','nilai_aset_gedung_dan_kendaraan', 'nilai_aset_mesin_dan_alat_produksi_lain','izin_usaha','catatan','latlong', 'latitude','longitude']);
+            fputcsv($file, ['ID','kelurahan', 'rw', 'rt' ,'nama_usaha', 
+            'kategori_usaha', 'jumlah_tenaga_kerja','pendapatan_per_tahun','pengeluaran_operasional',
+            'nilai_aset_gedung_dan_kendaraan', 'nilai_aset_mesin_dan_alat_produksi_lain','izin_usaha',
+            'catatan']);
+            $no = 1; // inisialisasi nomor urut
             foreach ($data as $row) {
                 fputcsv($file, [
-                    $row->id,
+                    $no++,
                     $row->kelurahan,
                     $row->rw,
                     $row->rt,
                     $row->nama_usaha,
                     $row->kategori_usaha,
-                 //   $row->jumlah_usaha,
                     $row->jumlah_tenaga_kerja,
                     $row->pendapatan_per_tahun,
                     $row->pengeluaran_operasional,
                     $row->nilai_aset_gedung_dan_kendaraan,
                     $row->nilai_aset_mesin_dan_alat_produksi_lain,
                     $row->izin_usaha,
-                 //   $row->jumlah_tenaga_kerja,
-                    $row->catatan,
+                    $row->catatan
                 ]);
             }
             fclose($file);

@@ -132,9 +132,10 @@ public function exportCsv()
             // Header kolom
             fputcsv($file, ['ID', 'Kelurahan', 'RW', 'RT', 'Nama Usaha', 'Nama Pemilik', 'Alamat Usaha', 'Deskripsi Usaha', 'Kategori Usaha', 'Catatan', 'Latitude', 'Longitude']);
             // Data baris
+            $no = 1; // inisialisasi nomor urut
             foreach ($data as $row) {
                 fputcsv($file, [
-                    $row->id,
+                    $no++,
                     $row->kelurahan,
                     $row->rw,
                     $row->rt,
