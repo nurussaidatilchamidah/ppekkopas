@@ -223,6 +223,25 @@
         attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    // Simpan posisi default awal
+    const defaultLat = -7.643147;
+    const defaultLng = 112.908287;
+    const defaultZoom = 13;
+
+    let isMarkerClicked = false;
+    let popupJustOpened = false;
+
+    // Event untuk reset jika klik area kosong di map
+   map.on('click', function () {
+    if (!isMarkerClicked) {
+        map.setView([defaultLat, defaultLng], defaultZoom, {
+            animate: true,
+            duration: 0.8
+        });
+    }
+    isMarkerClicked = false; // reset flag setelah semua klik
+});
+
     // Data dari backend
     const dataUsaha = @json($lokasiUsaha);
 
@@ -252,8 +271,21 @@
             const marker = L.marker([item.latitude, item.longitude], { icon: customIcon }).addTo(map);
             const linkMaps = `https://www.google.com/maps?q=${item.latitude},${item.longitude}`;
             marker.bindPopup(`<strong>${item.nama_usaha}</strong><br><a href="${linkMaps}" target="_blank">📍 Lihat di Google Maps</a>`);
-        }
+    
+            marker.on('click', () => {
+              isMarkerClicked = true;
+              popupJustOpened = true;
+
+            // Fokus ke marker
+            map.setView([item.latitude, item.longitude], 16, {
+                animate: true,
+                duration: 0.8
+            });
+            setTimeout(() => popupJustOpened = false, 500);
+});
+    }
     });
+
 
     // LEGEND
     const legend = L.control({ position: 'bottomright' });

@@ -148,16 +148,16 @@
   .blob-orange-top {
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, #ff9800, #fb8c00);
-    top: -150px;
-    left: -150px;
+    background: radial-gradient(circle, #ffcc80, #da7a1aff);
+    top: -60px;
+    left: -157px;
   }
 
   .blob-orange-bottom {
     width: 350px;
     height: 350px;
     background: radial-gradient(circle, #ffcc80, #ff9800);
-    bottom: -100px;
+    bottom: -60px;
     right: -120px;
   }
 
