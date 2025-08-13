@@ -21,6 +21,35 @@ class PendataanController extends Controller
         });
     }
 
+     // 🔹 Filter kelurahan (hanya 4 pilihan)
+    $allowedKelurahan = ['Randusari', 'Gentong', 'Pohjentrek', 'Mandaranrejo'];
+    if ($request->filled('kelurahan') && in_array($request->kelurahan, $allowedKelurahan)) {
+        $query->where('kelurahan', $request->kelurahan);
+    }
+
+    // 🔹 Filter kategori usaha
+    $allowedKategori = [
+        'A. Pertanian, Kehutanan, dan Perikanan',
+        'B. Pertambangan dan Penggalian',
+        'C. Industri Pengolahan',
+        'D. Pengadaan Listrik, Gas, Uap/Air Panas dan Udara Dingin',
+        'E. Pengadaan Air, Pengelolaan Sampah, Limbah, dan Daur Ulang',
+        'F. Konstruksi',
+        'G. Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor',
+        'H. Transportasi dan Pergudangan',
+        'I. Penyediaan Akomodasi dan Makan Minum',
+        'J. Informasi dan Komunikasi',
+        'K. Jasa Keuangan dan Asuransi',
+        'L. Real Estat',
+        'M. Aktivitas Profesional, Ilmiah, dan Teknis',
+        'N. Aktivitas Penyewaan dan Sewa Guna Usaha tanpa Hak Opsi, Ketenagakerjaan, Agen Perjalanan dan Penunjang Usaha Lainnya',
+        'O. Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib',
+        'P. Jasa Pendidikan',
+        'Q. Jasa Kesehatan dan Kegiatan Sosial',
+        'R. Kesenian, Hiburan, dan Rekreasi',
+        'S. Aktivitas Jasa Lainnya'
+    ];
+
      $perPage = $request->get('per_page', 10); // default: 10
 
    if ($perPage === 'all') {
@@ -32,7 +61,7 @@ class PendataanController extends Controller
         $isPaginated = true;
     }
 
-    return view('pendataan.index', compact('data', 'perPage', 'isPaginated'));
+    return view('pendataan.index', compact('data', 'perPage', 'isPaginated', 'allowedKelurahan', 'allowedKategori'));
     }
 
     // Menampilkan form tambah

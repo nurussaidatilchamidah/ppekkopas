@@ -7,18 +7,7 @@
     $isPaginated = $isPaginated ?? (is_object($data) && method_exists($data, 'links'));
 @endphp
 
-<div class="container mt-5">
-    <h2 class="mb-4 fw-bold">Data Pemutakhiran Usaha</h2>
-   <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
-    <div>
-        <a href="{{ route('pemutakhiran.create') }}" class="btn btn-primary">Tambah Data</a>
-        <a href="{{ url('/pemutakhiran/export') }}" class="btn btn-success">Export Data</a>
-    </div>
 
-    @if(session('success'))
-    @endif
-
-    
 <style>
     .title-text {
         font-size: 26px;
@@ -82,6 +71,16 @@
         border-color: #d58512;
     }
 
+    .filter {
+        border: 3px solid #ccc;
+        border-radius: 8px;
+        padding: 4px 10px;
+        font-size: 15px;
+        height: 36px;
+        flex: 1;
+        max-width: 1000px;
+    }
+
     .pagination {
         height: 40px; /* sama seperti btn dan select default */
         display: flex;
@@ -99,19 +98,59 @@
 }
 </style>
 
-<!-- search -->
-<form action="{{ route('pemutakhiran.index') }}" method="GET" class="d-flex flex-grow-1 justify-content-end" role="search" style="max-width: 100%;">
-        <input 
-            type="text" 
-            name="search" 
-            class="form-control custom-search-input" 
-            placeholder="Cari berdasarkan kelurahan, nama usaha atau kategori usaha....."             value="{{ request('search') }}"
-            value="{{ request('search') }}"
-            style="min-width: 300px;">
-        <button class="btn btn-warning text-white" type="submit" title="Cari">
-            <i class="fas fa-search"></i>
-        </button>
+<div class="container mt-5">
+    <h2 class="mb-4 fw-bold">Data Pemutakhiran Usaha</h2>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
+        <div>
+            <a href="{{ route('pemutakhiran.create') }}" class="btn btn-primary" style="margin-left:-1px;">Tambah Data</a>
+            <a href="{{ url('/pemutakhiran/export') }}" class="btn btn-success">Export Data</a>
+        </div>
+
+    @if(session('success'))
+    @endif
+
+    <!-- search -->
+    <form action="{{ route('pemutakhiran.index') }}" method="GET" class="d-flex flex-grow-1 justify-content-end" role="search" style="max-width: 100%;">
+            <input 
+                type="text" 
+                name="search" 
+                class="form-control custom-search-input" 
+                placeholder="Cari berdasarkan kelurahan, nama usaha atau kategori usaha....."             value="{{ request('search') }}"
+                value="{{ request('search') }}"
+                style="min-width: 300px;">
+            <button class="btn btn-warning text-white" type="submit" title="Cari">
+                <i class="fas fa-search"></i>
+            </button>
     </form>
+
+    <form method="GET" action="{{ route('pemutakhiran.index') }}" class="mb-3 d-flex gap-2">
+        {{-- Filter Kelurahan --}}
+        <select name="kelurahan" class="form-control filter">
+            <option value="">Kelurahan</option>
+            @foreach($allowedKelurahan as $kel)
+                <option value="{{ $kel }}" {{ request('kelurahan') == $kel ? 'selected' : '' }}>
+                    {{ $kel }}
+                </option>
+            @endforeach
+        </select>
+
+        {{-- Filter Kategori Usaha --}}
+        <select name="kategori_usaha" class="form-control filter">
+            <option value="">Kategori Usaha</option>
+            @foreach($allowedKategori as $kat)
+                <option value="{{ $kat }}" {{ request('kategori_usaha') == $kat ? 'selected' : '' }}>
+                    {{ $kat }}
+                </option>
+            @endforeach
+        </select>
+
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a href="{{ route('pemutakhiran.index') }}" class="btn btn-secondary">
+            Reset 
+        </a>
+    </form>
+</div>
+
 
   <div class="table-wrapper">
         <table class="table table-bordered text-center">
