@@ -21,8 +21,9 @@
 </style>
 
     <div class="mb-4">
-        <h4 class="fw-bold border-bottom pb-2 mb-3" style="color: #121213ff;">
-        Rekap Seluruh Usaha di masing-masing Kelurahan
+       <h4 class="fw-bold pb-2 mb-3" 
+            style="color: #121213ff; border-bottom: 3px solid black;">
+            Rekap Seluruh Usaha di masing-masing Kelurahan
         </h4>
     </div>
 
@@ -64,9 +65,10 @@
         padding: 0.4em 0.8em;
     }
 </style>
-    
+
     <div class="mb-3">
-        <h4 class="fw-bold border-bottom pb-2 mb-3 mt-5" style="color: #121213ff;">
+        <h4 class="fw-bold pb-2 mb-3 mt-5" 
+        style="color: #121213ff; border-bottom: 3px solid black;">
         Rekap Usaha per RT/RW setiap Kelurahan
         </h4>
     </div>
@@ -75,7 +77,7 @@
             <thead class="table-light">
                 <tr class="text-center">
         @foreach ($rekapRTRW as $kelurahan => $items)
-            <h5 class="mt-4" style="font-style: italic;">{{ $kelurahan }}</h5>
+            <h5 class="mt-4" style="font-style: italic; font-size: 17px;">{{ $kelurahan }}</h5>
         <table class="table table-bordered table-hover table-striped align-middle">
                 <thead>
                     <tr>
@@ -140,7 +142,8 @@
 </style>
     
     <div class="mb-3">
-        <h4 class="fw-bold border-bottom pb-2 mb-5 mt-5" style="color: #121213ff;">
+        <h4 class="fw-bold pb-2 mb-5 mt-5" 
+        style="color: #121213ff; border-bottom: 3px solid black;">
         Rekap Usaha per Kelurahan Menurut Kategori Usaha
         </h4>
     </div>

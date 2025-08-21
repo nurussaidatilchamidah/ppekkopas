@@ -20,6 +20,7 @@
         font-size: 16px; 
         padding: 12px; 
         vertical-align: middle;
+        
     }
 
     .table-wrapper {
@@ -99,7 +100,10 @@
 </style>
 
 <div class="container mt-5">
-    <h2 class="mb-4 fw-bold">Data Pemutakhiran Usaha</h2>
+    <h2 class="mb-5 text-center fw-bold mt-5" 
+    style="font-size: 1.6rem; font-family: Arial, sans-serif; font-style: italic;" >
+    Data Pemutakhiran Usaha
+    </h2>
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
         <div>
             <a href="{{ route('pemutakhiran.create') }}" class="btn btn-primary" style="margin-left:-1px;">Tambah Data</a>
@@ -153,9 +157,9 @@
 
 
   <div class="table-wrapper">
-        <table class="table table-bordered text-center">
-        <thead>
-            <tr>
+        <table class="table table-bordered table-hover table-striped align-middle">
+        <thead class="table-light">
+            <tr class="text-center">
                 <th>No</th>
                 <th>Kelurahan</th>
                 <th>RW</th>

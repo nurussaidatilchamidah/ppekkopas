@@ -8,15 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-        <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
         :root {
             --bps-blue: #1e3c72;
-            --bps-blue-light: #5e82c2ff;
+            --bps-blue-light: #5e82c2;
             --bps-orange: #FF8C00;
             --bps-orange-light: #FFB84D;
         }
@@ -83,32 +81,6 @@
             color: white;
         }
         
-       .card-header-bps {
-            background: linear-gradient(135deg, var(--bps-blue) 0%, var(--bps-blue-light) 100%);
-            color: white;
-            font-weight: 600;
-            padding: 1rem;
-            font-size: 1.05rem;
-            text-align: center;
-            border-top-left-radius: 0.5rem;
-            border-top-right-radius: 0.5rem;
-        }
-
-        .card {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            border-radius: 12px;
-            padding-bottom: 1rem;
-            min-height: 100px;
-            max-width: 500px;
-            margin: auto;
-            width: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-        }
-          .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
 
           
                  @media (max-width: 768px) {
@@ -130,41 +102,40 @@
             z-index: 1060 !important; /* pastikan di atas */
             position: relative;
         }
-    /* background 8 */
-  body {
-    background-color: #ffffff;
+
+body {
+  padding-top: 70px; /* supaya konten tidak ketiban navbar */
+}
+
+.app-background {
     position: relative;
-    font-family: 'Poppins', sans-serif;
-  }
+    margin: 0;
+    min-height: 100vh;
+    width: 100%;
+     background: linear-gradient(
+    to bottom,
+    rgba(111, 150, 255, 0.5),  /* biru pudar transparan */
+    rgba(255, 255, 255, 0.5),  /* putih transparan */
+    rgba(255, 165, 0, 0.5)     /* oranye transparan */
+  );
+    background-attachment: fixed;
+    background-size: cover;
+    overflow: hidden; /* supaya blur nggak keluar area */
+}
 
-  .background-blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.2;
-    z-index: 0;
-  }
+.app-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1; /* pastikan di belakang konten */
+  pointer-events: none;
+}
 
-  .blob-orange-top {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, #ffcc80, #da7a1aff);
-    top: -60px;
-    left: -157px;
-  }
 
-  .blob-orange-bottom {
-    width: 350px;
-    height: 350px;
-    background: radial-gradient(circle, #ffcc80, #ff9800);
-    bottom: -60px;
-    right: -120px;
-  }
 
-  .container, .card {
-    position: relative;
-    z-index: 10;
-  }
+
+
+
 </style>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">    
@@ -173,7 +144,8 @@
 </head>
 <body>
   <!-- Bootstrap 5 Offcanvas Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(-45deg, #F47B20, #c5550fff);">
+<div class="app-background">  
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top"  style="background: linear-gradient(to right, #f49938ff, #FF8C42);">
     <div class="container d-flex justify-content-between align-items-center">
 
         <!-- Logo + Teks + Logo lainnya -->
@@ -227,7 +199,8 @@
 </div>
 
     <!-- Main Content -->
-    <div class="container mt-4 mb-5 px-4">
+    
+        <div class=" container mt-4 mb-5 px-4">
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
@@ -241,9 +214,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-
+        
         @yield('content')
-    </div>
+        </div>
+</div>
 
     <!-- Scripts -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>

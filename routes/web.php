@@ -5,6 +5,7 @@ use App\Http\Controllers\PemutakhiranController;
 use App\Http\Controllers\PendataanController;
 use App\Http\Controllers\PendataanExportController;
 use App\Http\Controllers\PemutakhiranExportController;
+use App\Http\Controllers\LandingPageController;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -23,9 +24,8 @@ Route::resource('pemutakhiran', PemutakhiranController::class);
 Route::resource('pendataan', PendataanController::class);
 
 // Route untuk dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/dashboard', [LandingPageController::class, 'index'])->name('dashboard');
 
 // Route untuk rekap pemutakhiran
 Route::get('/rekap-pemutakhiran', [PemutakhiranController::class, 'rekap'])->name('pemutakhiran.rekap');
+
