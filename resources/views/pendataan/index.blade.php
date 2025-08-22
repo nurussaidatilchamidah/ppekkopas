@@ -80,7 +80,7 @@
 
 <div class="container mt-5">
     <h2 class="mb-5 text-center fw-bold mt-5" 
-        style="font-size: 1.6rem; font-family: Arial, sans-serif; font-style: italic;" >
+        style="font-size: 1.7rem; font-family: Arial, sans-serif; font-style: italic;" >
         Data Pendataan Usaha
     </h2>
        <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">

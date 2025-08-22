@@ -2,52 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\PemutakhiranData;
 
 class LandingPageController extends Controller
 {
     public function index()
     {
-
-        $allowedKelurahan = ['Randusari', 'Gentong', 'Pohjentrek', 'Mandaranrejo'];
-        // Inisialisasi semua kelurahan dengan nilai 0
-        $kelurahanData = array_fill_keys($allowedKelurahan, 0);
-
         $kelurahanFilter = ['Randusari', 'Gentong', 'Pohjentrek', 'Mandaranrejo'];
-        $dataKelurahan = collect($kelurahanFilter);
-        
-        // Total usaha per kelurahan (untuk bar chart)
-        $rekapPerKelurahan = DB::table('pendataan_usaha')
-            ->select('kelurahan', DB::raw('COUNT(*) as total'))
-            ->whereIn('kelurahan', $kelurahanFilter)
-            ->groupBy('kelurahan')
-            ->orderBy('kelurahan')
-            ->get()
-            ->toArray();
 
-        // Rekap per kategori per kelurahan (untuk 4 pie)
-        $rekapKategoriRaw = DB::table('pendataan_usaha')
-            ->select('kelurahan', 'kategori_usaha', DB::raw('COUNT(*) as total'))
-            ->whereIn('kelurahan', $kelurahanFilter)
-            ->groupBy('kelurahan', 'kategori_usaha')
-            ->get();
-
-        // Kelompokkan: kelurahan => [ {kategori_usaha, total}, ... ]
-        $rekapKategori = $rekapKategoriRaw
-            ->groupBy('kelurahan')
-            ->map(fn($rows) => $rows->values())
-            ->toArray();
-
-        // Data lokasi untuk peta
-        $lokasiUsaha = DB::table('pendataan_usaha')
-            ->select('nama_usaha', 'kategori_usaha', 'kelurahan', 'latitude', 'longitude')
-            ->whereIn('kelurahan', $kelurahanFilter)
-            ->whereNotNull('latitude')
-            ->whereNotNull('longitude')
-            ->get()
-            ->toArray();
-
-        // 19 kategori (persis seperti di halaman rekap)
         $kategoriList = [
             'A. Pertanian, Kehutanan, dan Perikanan',
             'B. Pertambangan dan Penggalian',
@@ -70,10 +32,38 @@ class LandingPageController extends Controller
             'S. Aktivitas Jasa Lainnya',
         ];
 
-        
+        $rekapPerKelurahan = PemutakhiranData::select('kelurahan', \DB::raw('COUNT(*) as total'))
+            ->whereIn('kelurahan', $kelurahanFilter)
+            ->groupBy('kelurahan')
+            ->get();
 
-        return view('dashboard', compact(
-            'kategoriList', 'rekapPerKelurahan', 'rekapKategori', 'lokasiUsaha'
-        ));
+        $rekapKategoriRaw = PemutakhiranData::select('kelurahan', 'kategori_usaha', \DB::raw('COUNT(*) as total'))
+            ->whereIn('kelurahan', $kelurahanFilter)
+            ->groupBy('kelurahan', 'kategori_usaha')
+            ->get();
+
+        $rekapKategori = [];
+        foreach ($kelurahanFilter as $kel) {
+            $rows = collect($kategoriList)->map(fn($kat) => ['kategori_usaha' => $kat, 'total' => 0])->toArray();
+            foreach ($rekapKategoriRaw->where('kelurahan', $kel) as $r) {
+                $key = array_search($r->kategori_usaha, array_column($rows, 'kategori_usaha'));
+                if ($key !== false) $rows[$key]['total'] = $r->total;
+            }
+            $rekapKategori[$kel] = $rows;
+        }
+
+        $lokasiUsaha = PemutakhiranData::select('nama_usaha', 'kelurahan', 'latitude', 'longitude')
+            ->whereIn('kelurahan', $kelurahanFilter)
+            ->whereNotNull('latitude')
+            ->whereNotNull('longitude')
+            ->get()
+            ->map(fn($item) => [
+                'nama_usaha' => $item->nama_usaha,
+                'kelurahan' => $item->kelurahan,
+                'latitude' => $item->latitude,
+                'longitude' => $item->longitude
+            ])->toArray();
+
+        return view('dashboard', compact('kategoriList', 'rekapPerKelurahan', 'rekapKategori', 'lokasiUsaha'));
     }
 }

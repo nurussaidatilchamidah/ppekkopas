@@ -145,7 +145,7 @@ body {
 <body>
   <!-- Bootstrap 5 Offcanvas Navbar -->
 <div class="app-background">  
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top"  style="background: linear-gradient(to right, #f49938ff, #FF8C42);">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top"  style="background: linear-gradient(to left, #ff7b00, #ffae42);">
     <div class="container d-flex justify-content-between align-items-center">
 
         <!-- Logo + Teks + Logo lainnya -->

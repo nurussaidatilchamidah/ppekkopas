@@ -49,9 +49,9 @@ class PemutakhiranController extends Controller
         'S. Aktivitas Jasa Lainnya'
     ];
 
-    if ($request->filled('kategori_usaha') && in_array($request->kategori_usaha, $allowedKategori)) {
-        $query->where('kategori_usaha', $request->kategori_usaha);
-    }
+  if ($request->kategori_usaha) {
+    $query->where('kategori_usaha', 'LIKE', '%' . trim($request->kategori_usaha) . '%');
+}
 
         $perPage = $request->get('per_page', 10); // default: 10
 
@@ -193,11 +193,16 @@ public function rekap()
         ->groupBy('kelurahan')
         ->get();
 
-    $rekapKategori = PemutakhiranData::select('kelurahan', 'kategori_usaha', \DB::raw('COUNT(*) as total'))
-        ->whereIn('kelurahan', $kelurahanFilter)
-        ->groupBy('kelurahan', 'kategori_usaha')
-        ->get()
-        ->groupBy('kelurahan');
+$rekapKategori = PemutakhiranData::select(
+        'kelurahan',
+        \DB::raw("kategori_usaha"),
+        \DB::raw("COUNT(*) as total")
+    )
+    ->whereIn('kelurahan', $kelurahanFilter)
+    ->groupBy('kelurahan', 'kategori_usaha')
+    ->get()
+    ->groupBy('kelurahan');
+
 
     $rekapRTRW = PemutakhiranData::select('kelurahan', 'rw', 'rt', \DB::raw('COUNT(*) as total'))
         ->whereIn('kelurahan', $kelurahanFilter)

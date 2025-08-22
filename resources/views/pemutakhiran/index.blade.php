@@ -82,10 +82,13 @@
         max-width: 1000px;
     }
 
-    .pagination {
+.pagination {
         height: 40px; /* sama seperti btn dan select default */
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 4px;
+        justify-content: center;
     }
 
     .pagination-wrapper {
@@ -93,15 +96,31 @@
     }
 
     .page-item .page-link {
-    padding: 0.375rem 0.75rem; /* sesuaikan dengan tombol bootstrap */
-    font-size: 0.9rem;
-    border-radius: 0.375rem;
-}
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+	}
+        
+    	@media (max-width: 320px) {
+    	/* Sembunyikan semua page number kecuali 1, 2, dan terakhir */
+    	.pagination li:not(:first-child):not(:nth-child(2)):not(:last-child) {
+    	    display: none;
+    	}
+
+    	/* Tampilkan elipsis di posisi halaman ke-3 */
+    	.pagination li:nth-child(3)::after {
+      	  content: ' ... ';
+      	  display: inline-block;
+       	  padding: 0 5px;
+          color: #333;
+          font-weight: bold;
+    	}
+	}
 </style>
 
 <div class="container mt-5">
     <h2 class="mb-5 text-center fw-bold mt-5" 
-    style="font-size: 1.6rem; font-family: Arial, sans-serif; font-style: italic;" >
+    style="font-size: 1.7rem; font-family: Arial, sans-serif; font-style: italic;" >
     Data Pemutakhiran Usaha
     </h2>
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
@@ -236,7 +255,7 @@
         </form>
     </div>
 
-    <!-- tengah: pagination -->
+     <!-- tengah: pagination -->
     <div class="flex-grow-1 d-flex flex-column align-items-center" style="padding-top: 16px;">
         @if ($isPaginated)
             {{ $data->withQueryString()->links() }}
@@ -247,7 +266,7 @@
     </div>
 
     <!-- kanan: tombol kembali -->
-    <div class="ms-auto">
+    <div class="d-flex justify-content-end mt-3 mb-5">
         <a href="{{ route('dashboard') }}" class="btn btn-secondary">Kembali</a>
     </div>
 </div>
