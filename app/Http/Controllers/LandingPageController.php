@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PemutakhiranData;
+use Illuminate\Support\Facades\DB;
 
 class LandingPageController extends Controller
 {
@@ -10,48 +11,50 @@ class LandingPageController extends Controller
     {
         $kelurahanFilter = ['Randusari', 'Gentong', 'Pohjentrek', 'Mandaranrejo'];
 
-        $kategoriList = [
-            'A. Pertanian, Kehutanan, dan Perikanan',
-            'B. Pertambangan dan Penggalian',
-            'C. Industri Pengolahan',
-            'D. Pengadaan Listrik, Gas, Uap/Air Panas dan Udara Dingin',
-            'E. Pengadaan Air, Pengelolaan Sampah, Limbah, dan Daur Ulang',
-            'F. Konstruksi',
-            'G. Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor',
-            'H. Transportasi dan Pergudangan',
-            'I. Penyediaan Akomodasi dan Makan Minum',
-            'J. Informasi dan Komunikasi',
-            'K. Jasa Keuangan dan Asuransi',
-            'L. Real Estat',
-            'M. Aktivitas Profesional, Ilmiah, dan Teknis',
-            'N. Aktivitas Penyewaan dan Sewa Guna Usaha tanpa Hak Opsi, Ketenagakerjaan, Agen Perjalanan dan Penunjang Usaha Lainnya',
-            'O. Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib',
-            'P. Jasa Pendidikan',
-            'Q. Jasa Kesehatan dan Kegiatan Sosial',
-            'R. Kesenian, Hiburan, dan Rekreasi',
-            'S. Aktivitas Jasa Lainnya',
-        ];
-
-        $rekapPerKelurahan = PemutakhiranData::select('kelurahan', \DB::raw('COUNT(*) as total'))
+        // Rekap total per kelurahan
+        $rekapPerKelurahan = PemutakhiranData::select('kelurahan', DB::raw('COUNT(*) as total'))
             ->whereIn('kelurahan', $kelurahanFilter)
             ->groupBy('kelurahan')
             ->get();
 
-        $rekapKategoriRaw = PemutakhiranData::select('kelurahan', 'kategori_usaha', \DB::raw('COUNT(*) as total'))
+        // Ambil semua kategori unik dari DB (sudah di-TRIM biar bersih)
+        $kategoriList = PemutakhiranData::select(DB::raw("TRIM(kategori_usaha) as kategori_usaha"))
+            ->distinct()
+            ->orderBy('kategori_usaha', 'asc')
+            ->pluck('kategori_usaha')
+            ->toArray();
+
+        // Rekap kategori per kelurahan
+        $rekapKategoriRaw = PemutakhiranData::select(
+                'kelurahan',
+                DB::raw("TRIM(kategori_usaha) as kategori_usaha"),
+                DB::raw('COUNT(*) as total')
+            )
             ->whereIn('kelurahan', $kelurahanFilter)
             ->groupBy('kelurahan', 'kategori_usaha')
             ->get();
 
+        // Susun hasil rekap berdasarkan kategoriList
         $rekapKategori = [];
         foreach ($kelurahanFilter as $kel) {
-            $rows = collect($kategoriList)->map(fn($kat) => ['kategori_usaha' => $kat, 'total' => 0])->toArray();
+            $rows = collect($kategoriList)->map(fn($kat) => [
+                'kategori_usaha' => $kat,
+                'total' => 0
+            ])->toArray();
+
             foreach ($rekapKategoriRaw->where('kelurahan', $kel) as $r) {
-                $key = array_search($r->kategori_usaha, array_column($rows, 'kategori_usaha'));
-                if ($key !== false) $rows[$key]['total'] = $r->total;
+                $kategoriDb = trim($r->kategori_usaha);
+
+                $key = array_search($kategoriDb, array_column($rows, 'kategori_usaha'));
+                if ($key !== false) {
+                    $rows[$key]['total'] = $r->total;
+                }
             }
+
             $rekapKategori[$kel] = $rows;
         }
 
+        // Data peta
         $lokasiUsaha = PemutakhiranData::select('nama_usaha', 'kelurahan', 'latitude', 'longitude')
             ->whereIn('kelurahan', $kelurahanFilter)
             ->whereNotNull('latitude')

@@ -92,16 +92,24 @@
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
    /* Grid chart */
   .charts-grid {
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:20px;
+    justify-content: center;   /* ⬅️ center horizontal */
+    align-items: center; 
     max-width:1100px;
     margin:30px auto;
     padding:0 16px;
   }
+
+  
   #barTotals{height:360px}
   #map{height:440px;max-width:1100px;margin:30px auto;border-radius:14px;box-shadow:0 6px 20px rgba(15,23,42,.06)}
   @media(max-width:900px){.charts-grid{grid-template-columns:1fr}}
@@ -290,6 +298,7 @@
     },
     options:{
       responsive:true,
+      maintainAspectRatio: false,
       plugins:{ title:{ display:true, text:'', font:{weight:'bold',size:16} }, legend:{ display:false } },
       scales:{ y:{ 
         beginAtZero:true,

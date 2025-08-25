@@ -50,6 +50,11 @@ class PendataanController extends Controller
         'S. Aktivitas Jasa Lainnya'
     ];
 
+    // Filter kategori usaha
+    if ($request->filled('kategori_usaha') && in_array($request->kategori_usaha, $allowedKategori)) {
+        $query->where('kategori_usaha', 'LIKE', '%' . trim($request->kategori_usaha) . '%');
+    }
+
      $perPage = $request->get('per_page', 10); // default: 10
 
    if ($perPage === 'all') {

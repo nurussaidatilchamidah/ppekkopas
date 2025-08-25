@@ -125,10 +125,11 @@ body {
 
 .app-background::before {
   content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: -1; /* pastikan di belakang konten */
   pointer-events: none;
+   background: inherit;
 }
 
 
