@@ -149,162 +149,40 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-hover table-striped align-middle">
-            <thead class="table-light">
-                <tr class="text-center">
-                    <th style="min-width: 60px;">No</th>
-                    <th style="min-width: 150px;">Kelurahan</th>
+    <table class="table table-bordered table-hover table-striped align-middle">
+        <thead class="table-light">
+            <tr class="text-center">
+                <th style="min-width: 60px;">No</th>
+                <th style="min-width: 150px;">Kelurahan</th>
+                @foreach ($kategoriList as $kat)
+                    <th style="min-width: 220px;">{{ $kat }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($rekapKategori as $kel => $data)
+                <tr class="{{ $loop->iteration % 2 == 0 ? 'table-light' : '' }}">
+                    <td class="text-center">{{ $loop->iteration }}</td>
+                    <td>{{ $kel }}</td>
                     @foreach ($kategoriList as $kat)
-                        <th style="min-width: 220px;">{{ $kat }}</th>
+                        @php
+                            $found = null;
+                            foreach ($data as $row) {
+                                if ($row['kategori_usaha'] === $kat) {
+                                    $found = $row;
+                                    break;
+                                }
+                            }
+                        @endphp
+                        <td class="text-center">{{ $found ? $found['total'] : 0 }}</td>
                     @endforeach
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($rekapKategori as $kel => $data)
-                    <tr class="{{ $loop->iteration % 2 == 0 ? 'table-light' : '' }}">
-                        <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $kel }}</td>
-                        @foreach ($kategoriList as $kat)
-                            @php
-                                $found = $data->firstWhere('kategori_usaha', $kat);
-                            @endphp
-                            <td class="text-center">{{ $found ? $found->total : 0 }}</td>
-                        @endforeach
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 
-{{-- PETA INTERAKTIF (LEAFLET) --}}
-
-<style>
-    #map {
-        width: 1200px;
-        height: 500px;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
-
-    .legend {
-        background: white;
-        padding: 10px;
-        border-radius: 5px;
-        line-height: 1.5;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        border: 1px solid #ccc;
-    }
-
-    .legend img {
-        vertical-align: middle;
-        margin-right: 8px;
-        width: 12px;
-        height: 20px;
-    }
-</style>
-
-<div class="container mt-5">
-    <h4 class="mb-4 fw-bold text-center" style="font-size: 1.2rem;">Peta Sebaran Usaha</h4>
-
-    <div class="d-flex justify-content-center mb-5">
-        <div id="map" class="rounded shadow-sm"></div>
-    </div>
 </div>
-
-{{-- Leaflet CSS & JS --}}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script>
-    // Inisialisasi peta
-    const map = L.map('map').setView([-7.640597, 112.911583], 13);
-
-    // Tambahkan tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    // Simpan posisi default awal
-    const defaultLat = -7.643147;
-    const defaultLng = 112.908287;
-    const defaultZoom = 13;
-
-    let isMarkerClicked = false;
-    let popupJustOpened = false;
-
-    // Event untuk reset jika klik area kosong di map
-   map.on('click', function () {
-    if (!isMarkerClicked) {
-        map.setView([defaultLat, defaultLng], defaultZoom, {
-            animate: true,
-            duration: 0.8
-        });
-    }
-    isMarkerClicked = false; // reset flag setelah semua klik
-});
-
-    // Data dari backend
-    const dataUsaha = @json($lokasiUsaha);
-
-    // Warna per kelurahan
-    const kelurahanColors = {
-        'Gentong': 'blue',
-        'Mandaranrejo': 'red',
-        'Pohjentrek': 'green',
-        'Randusari': 'orange'
-    };
-
-    dataUsaha.forEach(item => {
-        const kel = item.kelurahan?.trim();
-        const warna = kelurahanColors[kel];
-
-        if (item.latitude && item.longitude && warna) {
-            // Buat custom icon
-            const customIcon = L.icon({
-                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${warna}.png`,
-                shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                shadowSize: [41, 41]
-            });
-
-            const marker = L.marker([item.latitude, item.longitude], { icon: customIcon }).addTo(map);
-            const linkMaps = `https://www.google.com/maps?q=${item.latitude},${item.longitude}`;
-            marker.bindPopup(`<strong>${item.nama_usaha}</strong><br><a href="${linkMaps}" target="_blank">📍 Lihat di Google Maps</a>`);
-    
-            marker.on('click', () => {
-              isMarkerClicked = true;
-              popupJustOpened = true;
-
-            // Fokus ke marker
-            map.setView([item.latitude, item.longitude], 16, {
-                animate: true,
-                duration: 0.8
-            });
-            setTimeout(() => popupJustOpened = false, 500);
-});
-    }
-    });
-
-
-    // LEGEND
-    const legend = L.control({ position: 'bottomright' });
-    legend.onAdd = function () {
-        const div = L.DomUtil.create('div', 'legend');
-        div.innerHTML += "<strong>Keterangan Kelurahan</strong><br>";
-
-        for (const [nama, warna] of Object.entries(kelurahanColors)) {
-            const iconUrl = `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${warna}.png`;
-            div.innerHTML += `<img src="${iconUrl}"> ${nama}<br>`;
-        }
-
-        return div;
-    };
-    legend.addTo(map);
-</script>
 
 <!-- kanan: tombol kembali -->
     <div class="d-flex justify-content-end mt-3">

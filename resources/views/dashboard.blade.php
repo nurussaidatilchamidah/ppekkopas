@@ -79,41 +79,63 @@
     border-radius: 10px;
     background: linear-gradient(90deg, #f97316, #1e40af);
   }
-
-  /* CHART & MAP STYLE */
-  .charts-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 40px;
-  }
-  .chart-box {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-   /* Grid chart */
-  .charts-grid {
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
-    justify-content: center;   /* ⬅️ center horizontal */
-    align-items: center; 
-    max-width:1100px;
-    margin:30px auto;
-    padding:0 16px;
-  }
-
   
-  #barTotals{height:360px}
-  #map{height:440px;max-width:1100px;margin:30px auto;border-radius:14px;box-shadow:0 6px 20px rgba(15,23,42,.06)}
-  @media(max-width:900px){.charts-grid{grid-template-columns:1fr}}
+/* === PIE CHART STYLE === */
+.pie-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-content: center;   
+  align-items: center; 
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 16px;
+}
 
+@media(max-width:900px) {
+  .pie-grid { grid-template-columns: 1fr; }
+}
+
+.pie-box {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;        
+  max-width: 500px;   /* konsisten dengan bar chart */
+  margin: 0 auto;  
+}
+
+.pie-box canvas {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1/1;   /* 🔑 biar bulat sempurna */
+}
+
+
+
+/* === BAR CHART STYLE === */
+.bar-box {
+  background: white;
+  padding: 16px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+#barTotals {
+  height: 360px;   /* ✅ jaga proporsional, tidak gepeng */
+}
+
+
+/* === MAP STYLE === */
+  
   /* Legend scroll bawah chart */
   .legend-scroll {
     max-height: 140px;   /* atur tinggi legend */
@@ -140,13 +162,15 @@
   }
 
   {{-- PETA INTERAKTIF (LEAFLET) --}}
-    #map {
-        width: 1200px;
-        height: 500px;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
+  #map {
+    width: 100%;       /* penuh selebar container */
+    height: 80vh;      /* 80% tinggi layar */
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+
 
     .legend {
         background: white;
@@ -188,9 +212,9 @@
   Diagram Lingkaran Kategori Usaha per Kelurahan
 </h4>
 
-  <div class="charts-grid">
+  <div class="pie-grid">
     @foreach(['A','B','C','D'] as $i)
-      <div class="chart-box">
+      <div class="pie-box">
         <canvas id="pie{{ $i }}"></canvas>
         <div id="legend{{ $i }}" class="legend-scroll"></div>
       </div>
@@ -201,7 +225,7 @@
 <!-- ===== BAR CHART ===== -->
 <section>
   <h4 class="mb-4 fw-bold text-center" style="font-size: 1.0rem;">Diagram Batang Jumlah Usaha per Kelurahan</h4>
-  <div class="chart-box" style="max-width:1100px;margin:0 auto;padding:16px">
+  <div class="bar-box" style="max-width:1100px;margin:0 auto;padding:16px">
     <canvas id="barTotals"></canvas>
   </div>
 </section>

@@ -82,40 +82,54 @@
         max-width: 1000px;
     }
 
-.pagination {
-        height: 40px; /* sama seperti btn dan select default */
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 4px;
-        justify-content: center;
+    #per_page {
+    min-width: 75px;   /* agak lebar biar angka keliatan */
+    font-size: 15px;    /* ukuran font enak dibaca */
+    padding: 6px 10px;  /* kasih ruang dalam */
+    border-radius: 6px; /* biar sudutnya halus */
     }
 
-    .pagination-wrapper {
-            flex: 1;
-    }
-
-    .page-item .page-link {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-    border-radius: 6px;
-	}
         
-    	@media (max-width: 320px) {
-    	/* Sembunyikan semua page number kecuali 1, 2, dan terakhir */
-    	.pagination li:not(:first-child):not(:nth-child(2)):not(:last-child) {
-    	    display: none;
-    	}
+/* Default pagination (desktop) tetap */
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
 
-    	/* Tampilkan elipsis di posisi halaman ke-3 */
-    	.pagination li:nth-child(3)::after {
-      	  content: ' ... ';
-      	  display: inline-block;
-       	  padding: 0 5px;
-          color: #333;
-          font-weight: bold;
-    	}
-	}
+/* Mobile view */
+@media (max-width: 576px) {
+        
+    .pagination {
+        gap: 3px;
+        font-size: 14px;
+    }
+        
+    .pagination li {
+        display: none; /* Sembunyikan semua */
+    }
+
+    /* Tampilkan prev, next, current, halaman 1 & terakhir */
+    .pagination li:first-child,
+    .pagination li:last-child,
+    .pagination li.active,
+    .pagination li:nth-child(2),
+    .pagination li:nth-last-child(2) {
+        display: inline-block !important;
+    }
+}
+
+/* Wrapper bagian bawah (dropdown + pagination + tombol kembali) */
+.bottom-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;  /* biar rapi di mobile */
+    gap: 10px;
+}
+
 </style>
 
 <div class="container mt-5">
@@ -242,7 +256,7 @@
 
 <div class="d-flex align-items-center mt-2 w-100">
     <!-- kiri: dropdown per page -->
-    <div>
+        <div>
         <form action="{{ route('pemutakhiran.index') }}" method="GET" class="d-flex align-items-center">
             <label for="per_page" class="me-2 mb-0 fw-bold fs-17px">Tampilkan</label>
             <select name="per_page" id="per_page" class="form-select me-2" onchange="this.form.submit()" style="max-width: 200px;">
@@ -251,7 +265,11 @@
                 <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
                 <option value="all" {{ $perPage === 'all' ? 'selected' : '' }}>Semua</option>
             </select>
+
+            {{-- supaya filter & search ikut ke submit --}}
             <input type="hidden" name="search" value="{{ request('search') }}">
+            <input type="hidden" name="kelurahan" value="{{ request('kelurahan') }}">
+            <input type="hidden" name="kategori_usaha" value="{{ request('kategori_usaha') }}">
         </form>
     </div>
 

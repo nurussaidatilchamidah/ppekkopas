@@ -49,11 +49,16 @@ class PemutakhiranController extends Controller
         'S. Aktivitas Jasa Lainnya'
     ];
 
-  if ($request->kategori_usaha) {
-    $query->where('kategori_usaha', 'LIKE', '%' . trim($request->kategori_usaha) . '%');
-}
+    // 🔹 Filter kategori usaha (longgar biar data lama & baru ikut)
+    if ($request->filled('kategori_usaha') && in_array($request->kategori_usaha, $allowedKategori)) {
+        $prefix = substr($request->kategori_usaha, 0, 2); // ambil "N."
+        $query->where('kategori_usaha', 'LIKE', $prefix . '%');
+    }
 
-        $perPage = $request->get('per_page', 10); // default: 10
+        $perPage = $request->input('per_page', $request->session()->get('per_page', 10));
+
+        // simpan ke session supaya tetap konsisten
+        $request->session()->put('per_page', $perPage);
 
    if ($perPage === 'all') {
         $data = $query->orderBy('created_at', 'desc')->get();
@@ -182,28 +187,85 @@ session([
 
         return redirect()->route('pemutakhiran.index')->with('success', 'Data berhasil dihapus.');
     }
+
+    
 public function rekap()
 {
     $kelurahanFilter = ['Randusari', 'Gentong', 'Pohjentrek', 'Mandaranrejo'];
 
+    $kategoriList = [
+        'A. Pertanian, Kehutanan, dan Perikanan',
+        'B. Pertambangan dan Penggalian',
+        'C. Industri Pengolahan',
+        'D. Pengadaan Listrik, Gas, Uap/Air Panas dan Udara Dingin',
+        'E. Pengadaan Air, Pengelolaan Sampah, Limbah, dan Daur Ulang',
+        'F. Konstruksi',
+        'G. Perdagangan Besar dan Eceran, Reparasi Mobil dan Sepeda Motor',
+        'H. Transportasi dan Pergudangan',
+        'I. Penyediaan Akomodasi dan Makan Minum',
+        'J. Informasi dan Komunikasi',
+        'K. Jasa Keuangan dan Asuransi',
+        'L. Real Estat',
+        'M. Aktivitas Profesional, Ilmiah, dan Teknis',
+        'N. Aktivitas Penyewaan dan Sewa Guna Usaha tanpa Hak Opsi, Ketenagakerjaan, Agen Perjalanan dan Penunjang Usaha Lainnya',
+        'O. Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib',
+        'P. Jasa Pendidikan',
+        'Q. Jasa Kesehatan dan Kegiatan Sosial',
+        'R. Kesenian, Hiburan, dan Rekreasi',
+        'S. Aktivitas Jasa Lainnya'
+    ];
+
     $dataKelurahan = collect($kelurahanFilter);
 
+    // 🔹 Rekap per kelurahan
     $rekapPerKelurahan = PemutakhiranData::select('kelurahan', \DB::raw('COUNT(*) as total'))
         ->whereIn('kelurahan', $kelurahanFilter)
         ->groupBy('kelurahan')
         ->get();
 
-$rekapKategori = PemutakhiranData::select(
-        'kelurahan',
-        \DB::raw("kategori_usaha"),
-        \DB::raw("COUNT(*) as total")
-    )
-    ->whereIn('kelurahan', $kelurahanFilter)
-    ->groupBy('kelurahan', 'kategori_usaha')
-    ->get()
-    ->groupBy('kelurahan');
+    // 🔹 Ambil data kategori mentah
+    $rekapKategoriRaw = PemutakhiranData::select(
+            'kelurahan',
+            \DB::raw("TRIM(kategori_usaha) as kategori_usaha"),
+            \DB::raw("COUNT(*) as total")
+        )
+        ->whereIn('kelurahan', $kelurahanFilter)
+        ->groupBy('kelurahan', \DB::raw("TRIM(kategori_usaha)"))
+        ->get();
 
+    // 🔹 Susun rekap kategori fix (A–S)
+    $rekapKategori = [];
+    foreach ($kelurahanFilter as $kel) {
+        $rows = collect($kategoriList)->map(fn($kat) => [
+            'kategori_usaha' => $kat,
+            'total' => 0
+        ])->toArray();
 
+        foreach ($rekapKategoriRaw->where('kelurahan', $kel) as $r) {
+            $kategoriDb = trim($r->kategori_usaha);
+
+            // Cari yang persis sama
+            $key = array_search($kategoriDb, array_column($rows, 'kategori_usaha'));
+
+            // Kalau tidak ada, cocokkan dengan prefix kode (A., B., dst.)
+            if ($key === false) {
+                foreach ($rows as $idx => $row) {
+                    if (stripos($row['kategori_usaha'], substr($kategoriDb, 0, 2)) === 0) {
+                        $key = $idx;
+                        break;
+                    }
+                }
+            }
+
+            if ($key !== false) {
+                $rows[$key]['total'] += $r->total; // ✅ pakai += supaya nambah, bukan overwrite
+            }
+        }
+
+        $rekapKategori[$kel] = $rows;
+    }
+
+    // 🔹 Rekap per RT/RW
     $rekapRTRW = PemutakhiranData::select('kelurahan', 'rw', 'rt', \DB::raw('COUNT(*) as total'))
         ->whereIn('kelurahan', $kelurahanFilter)
         ->groupBy('kelurahan', 'rw', 'rt')
@@ -213,6 +275,7 @@ $rekapKategori = PemutakhiranData::select(
         ->get()
         ->groupBy('kelurahan');
 
+    // 🔹 Data lokasi usaha
     $lokasiUsaha = PemutakhiranData::select('nama_usaha', 'kelurahan', 'latitude', 'longitude')
         ->whereIn('kelurahan', $kelurahanFilter)
         ->whereNotNull('latitude')
@@ -226,7 +289,8 @@ $rekapKategori = PemutakhiranData::select(
         'rekapRTRW',
         'lokasiUsaha'
     ));
-}        
+}
+
 
 }
 

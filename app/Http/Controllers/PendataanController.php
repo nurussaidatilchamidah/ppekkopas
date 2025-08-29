@@ -55,7 +55,11 @@ class PendataanController extends Controller
         $query->where('kategori_usaha', 'LIKE', '%' . trim($request->kategori_usaha) . '%');
     }
 
-     $perPage = $request->get('per_page', 10); // default: 10
+    $perPage = $request->input('per_page', $request->session()->get('per_page', 10));
+
+    // simpan ke session supaya tetap konsisten
+    $request->session()->put('per_page', $perPage);
+
 
    if ($perPage === 'all') {
         $data = $query->orderBy('created_at', 'desc')->get();

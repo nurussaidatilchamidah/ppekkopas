@@ -206,7 +206,6 @@ value="{{ request('search') }}"
 
 
 <div class="d-flex align-items-center mt-2 w-100">
-    <!-- kiri: dropdown per page -->
     <div>
         <form action="{{ route('pendataan.index') }}" method="GET" class="d-flex align-items-center">
             <label for="per_page" class="me-2 mb-0 fw-bold fs-17px">Tampilkan</label>
@@ -216,7 +215,11 @@ value="{{ request('search') }}"
                 <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
                 <option value="all" {{ $perPage === 'all' ? 'selected' : '' }}>Semua</option>
             </select>
+
+            {{-- supaya filter & search ikut ke submit --}}
             <input type="hidden" name="search" value="{{ request('search') }}">
+            <input type="hidden" name="kelurahan" value="{{ request('kelurahan') }}">
+            <input type="hidden" name="kategori_usaha" value="{{ request('kategori_usaha') }}">
         </form>
     </div>
 
