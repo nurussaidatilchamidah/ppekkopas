@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Badan Pusat Statistik Kota Pasuruan')</title>
-	<link rel="icon" href="img/logo.png" type="image/x-icon">
+    <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -172,6 +172,7 @@ body {
         <!-- Normal menu di layar besar -->
         <div class="d-none d-lg-flex gap-3 nav-link">
             <a class="text-white fw-semibold me-4" href="{{ route('pemutakhiran.rekap') }}">Rekapitulasi</a>
+            <a class="text-white fw-semibold me-4" href="{{ route('pendataan.tabulasi') }}">Tabulasi</a>            
             <a class="text-white fw-semibold me-4" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>
             <a class="text-white fw-semibold" href="{{ route('pendataan.index') }}">Pendataan</a>
         </div>
@@ -188,6 +189,9 @@ body {
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
                 <a class="nav-link fw-semibold" style="font-size: 1.05rem;" href="{{ route('pemutakhiran.rekap') }}">Rekapitulasi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link fw-semibold" style="font-size: 1.05rem;" href="{{ route('pendataan.tabulasi') }}">Tabulasi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link fw-semibold" style="font-size: 1.05rem;" href="{{ route('pemutakhiran.index') }}">Pemutakhiran</a>

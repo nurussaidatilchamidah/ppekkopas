@@ -3,11 +3,12 @@
 @section('content')
 
 <!-- ===== HERO SECTION ===== -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
-{{-- Leaflet CSS & JS --}}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/2.4.0/Control.FullScreen.min.css" /> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/2.4.0/Control.FullScreen.min.js"></script> -->
 
 <style>
   :root {
@@ -55,7 +56,7 @@
   }
   .orbit img {
     position: absolute;
-    width: 50px; height: 50px; /* ikon jangan kecil */
+    width: 50px; height: 50px;
     transform: translate(-50%, -50%);
     animation: float 3s ease-in-out infinite;
   }
@@ -79,114 +80,107 @@
     border-radius: 10px;
     background: linear-gradient(90deg, #f97316, #1e40af);
   }
-  
-/* === PIE CHART STYLE === */
-.pie-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  justify-content: center;   
-  align-items: center; 
-  max-width: 1100px;
-  margin: 30px auto;
-  padding: 0 16px;
-}
 
-@media(max-width:900px) {
-  .pie-grid { grid-template-columns: 1fr; }
-}
+  /* === PIE CHART STYLE === */
+  .pie-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 16px;
+  }
+  @media(max-width:900px) { .pie-grid { grid-template-columns: 1fr; } }
 
-.pie-box {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  .pie-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .pie-box canvas {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1/1;
+  }
 
-  width: 100%;        
-  max-width: 500px;   /* konsisten dengan bar chart */
-  margin: 0 auto;  
-}
+  /* === BAR CHART STYLE === */
+  .bar-box {
+    background: white;
+    padding: 16px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  #barTotals { height: 360px; }
 
-.pie-box canvas {
-  width: 100% !important;
-  height: auto !important;
-  aspect-ratio: 1/1;   /* 🔑 biar bulat sempurna */
-}
-
-
-
-/* === BAR CHART STYLE === */
-.bar-box {
-  background: white;
-  padding: 16px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-#barTotals {
-  height: 360px;   /* ✅ jaga proporsional, tidak gepeng */
-}
-
-
-/* === MAP STYLE === */
-  
-  /* Legend scroll bawah chart */
+  /* === MAP STYLE === */
   .legend-scroll {
-    max-height: 140px;   /* atur tinggi legend */
+    max-height: 140px;
     overflow-y: auto;
     margin-top: 12px;
   }
-  .legend-scroll ul {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-  }
+  .legend-scroll ul { list-style: none; padding-left: 0; margin: 0; }
   .legend-scroll li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 4px;
-    font-size: 14px;
+    display: flex; align-items: center; margin-bottom: 4px; font-size: 14px;
   }
   .legend-scroll li span {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    margin-right: 6px;
-    border-radius: 3px;
+    display: inline-block; width: 14px; height: 14px; margin-right: 6px; border-radius: 3px;
   }
 
-  {{-- PETA INTERAKTIF (LEAFLET) --}}
   #map {
-    width: 100%;       /* penuh selebar container */
-    height: 80vh;      /* 80% tinggi layar */
+    width: 100%;
+    height: 80vh;
     border: 2px solid #ddd;
     border-radius: 8px;
     margin-bottom: 20px;
-}
+    position: relative;     
+    overflow: hidden;        
+  }
 
+  .legend {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    line-height: 1.5;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+  }
+  .legend img { vertical-align: middle; margin-right: 8px; width: 12px; height: 20px; }
 
-
-    .legend {
-        background: white;
-        padding: 10px;
-        border-radius: 5px;
-        line-height: 1.5;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        border: 1px solid #ccc;
-    }
-
-    .legend img {
-        vertical-align: middle;
-        margin-right: 8px;
-        width: 12px;
-        height: 20px;
-    }
+  /* ===== FULL SCREEN MAP ===== */
+  #fsMapBtn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 6px;
+    background: #ffffff; 
+    color: #333;     
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 1px 4px rgba(0,0,0,.35);
+    transition: transform .05s ease, background .2s ease;
+  }
+  #fsMapBtn:hover { background: #f0f0f0; }
+  #fsMapBtn:active { transform: scale(0.98); }
+  #fsMapBtn svg { pointer-events: none; } /* biar klik tetap ke tombol */
+  #fsMapBtn:focus-visible{ outline: 2px solid #333;  outline-offset: 2px; }
 </style>
 
 <section class="hero">
@@ -207,8 +201,7 @@
 
 <!-- ===== PIE CHARTS PER KELURAHAN ===== -->
 <section>
- <h4 class="fw-bold text-center" 
-    style="font-size: 1.0rem; margin-top:50px; margin-bottom:20px;">
+ <h4 class="fw-bold text-center" style="font-size: 1.0rem; margin-top:50px; margin-bottom:20px;">
   Diagram Lingkaran Kategori Usaha per Kelurahan
 </h4>
 
@@ -324,50 +317,33 @@
       responsive:true,
       maintainAspectRatio: false,
       plugins:{ title:{ display:true, text:'', font:{weight:'bold',size:16} }, legend:{ display:false } },
-      scales:{ y:{ 
-        beginAtZero:true,
-        ticks:{ font:{weight:'bold',size:14} },
-       },
-      
-        x:{ 
-        ticks:{ font:{weight:'bold',size:14} }, 
-      }
+      scales:{ y:{ beginAtZero:true, ticks:{ font:{weight:'bold',size:14} } },
+               x:{ ticks:{ font:{weight:'bold',size:14} } } }
     }
-  }
   });
 
   // ==== LEAFLET MAP ====
-  // Inisialisasi peta
   const map = L.map('map').setView([-7.640597, 112.911583], 13);
 
-  // Tambahkan tile layer
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  // Simpan posisi default awal
   const defaultLat = -7.643147;
   const defaultLng = 112.908287;
   const defaultZoom = 13;
 
   let isMarkerClicked = false;
-  let popupJustOpened = false;
 
-  // Event untuk reset jika klik area kosong di map
   map.on('click', function () {
     if (!isMarkerClicked) {
-      map.setView([defaultLat, defaultLng], defaultZoom, {
-        animate: true,
-        duration: 0.8
-      });
+      map.setView([defaultLat, defaultLng], defaultZoom, { animate: true, duration: 0.8 });
     }
-    isMarkerClicked = false; // reset flag setelah semua klik
+    isMarkerClicked = false;
   });
 
-  // Data dari backend
   const dataUsaha = @json($lokasiUsaha);
 
-  // Warna per kelurahan
   const kelurahanColors = {
     'Randusari': 'orange',
     'Gentong': 'blue',
@@ -380,7 +356,6 @@
     const warna = kelurahanColors[kel];
 
     if (item.latitude && item.longitude && warna) {
-      // Buat custom icon
       const customIcon = L.icon({
         iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${warna}.png`,
         shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
@@ -396,32 +371,86 @@
 
       marker.on('click', () => {
         isMarkerClicked = true;
-        popupJustOpened = true;
-
-        // Fokus ke marker
-        map.setView([item.latitude, item.longitude], 16, {
-          animate: true,
-          duration: 0.8
-        });
-
-        setTimeout(() => popupJustOpened = false, 500);
+        map.setView([item.latitude, item.longitude], 16, { animate: true, duration: 0.8 });
       });
     }
   });
 
-  // LEGEND
   const legend = L.control({ position: 'bottomright' });
   legend.onAdd = function () {
     const div = L.DomUtil.create('div', 'legend');
     div.innerHTML += "<strong>Keterangan Kelurahan</strong><br>";
-
     for (const [nama, warna] of Object.entries(kelurahanColors)) {
       const iconUrl = `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${warna}.png`;
       div.innerHTML += `<img src="${iconUrl}"> ${nama}<br>`;
     }
-
     return div;
   };
   legend.addTo(map);
+
+  /* ==========================================================
+      Tombol fullscreen 
+     ========================================================== */
+  (function addFullscreenButton() {
+    const mapEl = map.getContainer();
+
+    // buat tombol
+    const btn = document.createElement('button');
+    btn.id = 'fsMapBtn';
+    btn.type = 'button';
+    btn.title = 'Lihat versi full';             // tooltip saat belum fullscreen
+    btn.setAttribute('aria-label', 'Lihat versi full');
+
+    // ikon 
+    btn.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 9V5H9" />
+        <path d="M15 5H19V9" />
+        <path d="M5 15V19H9" />
+        <path d="M19 15V19H15" />
+      </svg>
+    `;
+
+    // masukkan ke dalam #map agar posisinya relatif ke peta
+    mapEl.appendChild(btn);
+
+    const isFs = () =>
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement;
+
+    const enterFs = (el) =>
+      el.requestFullscreen?.() ||
+      el.webkitRequestFullscreen?.() ||
+      el.mozRequestFullScreen?.() ||
+      el.msRequestFullscreen?.();
+
+    const exitFs = () =>
+      document.exitFullscreen?.() ||
+      document.webkitExitFullscreen?.() ||
+      document.mozCancelFullScreen?.() ||
+      document.msExitFullscreen?.();
+
+    btn.addEventListener('click', () => {
+      if (isFs()) exitFs();
+      else enterFs(mapEl);
+    });
+
+    // update tooltip & perbaiki layout tile saat berubah fullscreen
+    const onFsChange = () => {
+      const aktif = !!isFs();
+      const title = aktif ? 'Keluar full view' : 'Lihat versi full';
+      btn.title = title;
+      btn.setAttribute('aria-label', title);
+      // invalidateSize agar peta menyesuaikan ukuran baru
+      setTimeout(() => map.invalidateSize(), 60);
+    };
+
+    document.addEventListener('fullscreenchange', onFsChange);
+    document.addEventListener('webkitfullscreenchange', onFsChange);
+    document.addEventListener('mozfullscreenchange', onFsChange);
+    document.addEventListener('MSFullscreenChange', onFsChange);
+  })();
 </script>
 @endsection

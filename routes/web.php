@@ -6,6 +6,7 @@ use App\Http\Controllers\PendataanController;
 use App\Http\Controllers\PendataanExportController;
 use App\Http\Controllers\PemutakhiranExportController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\TabulasiController;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -19,6 +20,9 @@ Route::get('/pemutakhiran/export', [PemutakhiranExportController::class, 'export
 
 // Routes untuk CRUD Pemutakhiran
 Route::resource('pemutakhiran', PemutakhiranController::class);
+
+// Route untuk Tabulasi
+Route::get('/pendataan/tabulasi', [TabulasiController::class, 'tabulasi'])->name('pendataan.tabulasi');
 
 // Routes untuk CRUD Pendataan
 Route::resource('pendataan', PendataanController::class);
