@@ -6,7 +6,15 @@
         font-size: 1.1rem;
     }
 
-    .table th, .table td {
+    /* hanya header tabel */
+    .table thead th {
+        font-size: 0.9rem;
+        vertical-align: middle;
+        border-bottom: 1px solid black !important;
+    }
+
+    /* isi tabel */
+    .table tbody td {
         font-size: 0.9rem;
         vertical-align: middle;
     }
@@ -14,7 +22,7 @@
     .filter-wrapper {
         display: flex;
         align-items: center;
-        gap: 10px; /* jarak antar elemen */
+        gap: 10px;
         max-width: 450px;
     }
 
@@ -47,139 +55,155 @@
         </div>
     </form>
     
-<!-- Rekap 1 -->
+    <!-- Rekap 1 -->
     <div class="mb-4">
-        <h4 class="fw-bold pb-2 mb-3" 
-            style="color: #121213ff; border-bottom: 3px solid black;">
+        <h4 class="fw-bold pb-2 mb-4" style="color: #121213ff; border-bottom: 3px solid black;">
             Jumlah Usaha Menurut Kategori
         </h4>
         <table class="table table-bordered table-hover table-striped align-middle">
-            <tr><th>Kategori</th><th>Usaha (Unit)</th></tr>
-            @foreach($tabel['kategori'] as $row)
-            <tr>
-                <td>{{ $row['kategori'] }}</td>
-                <td>{{ $row['jumlah'] }}</td>
-            </tr>
-            @endforeach
-            <tr class="fw-bold table-light">
-                <td>Total</td>
-                <td>{{ array_sum(array_column($tabel['kategori'], 'jumlah')) }}</td>
-            </tr>
+            <thead>
+                <tr><th>Kategori</th><th>Usaha (Unit)</th></tr>
+            </thead>
+            <tbody>
+                @foreach($tabel['kategori'] as $row)
+                <tr>
+                    <td>{{ $row['kategori'] }}</td>
+                    <td>{{ $row['jumlah'] }}</td>
+                </tr>
+                @endforeach
+                <tr class="fw-bold table-light">
+                    <td>Total</td>
+                    <td>{{ array_sum(array_column($tabel['kategori'], 'jumlah')) }}</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
-
-<!-- Rekap 2 -->
+    <!-- Rekap 2 -->
     <div class="mb-4">
-        <h4 class="fw-bold pb-2 mb-3" 
-            style="color: #121213ff; border-bottom: 3px solid black;">
+        <h4 class="fw-bold pb-2 mb-4 mt-5" style="color: #121213ff; border-bottom: 3px solid black;">
             Jumlah dan Persentase Usaha Menurut Skala Usaha / Jumlah Pekerja
         </h4>
         <table class="table table-bordered table-hover table-striped align-middle">
-            <tr><th>Skala Usaha</th><th>Jumlah (Unit)</th><th>Persentase</th></tr>
-            @foreach($tabel['skalaPekerja'] as $row)
-            <tr>
-                <td>{{ $row['skala'] }}</td>
-                <td>{{ $row['jumlah'] }}</td>
-                <td>{{ $row['persentase'] }}%</td>
-            </tr>
-            @endforeach
-            <tr class="fw-bold table-light">
-                <td>Total</td>
-                <td>{{ array_sum(array_column($tabel['skalaPekerja'], 'jumlah')) }}</td>
-                <td>100%</td>
-            </tr>
+            <thead>
+                <tr><th>Skala Usaha</th><th>Jumlah (Unit)</th><th>Persentase</th></tr>
+            </thead>
+            <tbody>
+                @foreach($tabel['skalaPekerja'] as $row)
+                <tr>
+                    <td>{{ $row['skala'] }}</td>
+                    <td>{{ $row['jumlah'] }}</td>
+                    <td>{{ $row['persentase'] }}%</td>
+                </tr>
+                @endforeach
+                <tr class="fw-bold table-light">
+                    <td>Total</td>
+                    <td>{{ array_sum(array_column($tabel['skalaPekerja'], 'jumlah')) }}</td>
+                    <td>100%</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
-<!-- Rekap 3 -->
+    <!-- Rekap 3 -->
     <div class="mb-4">
-        <h4 class="fw-bold pb-2 mb-3" 
-            style="color: #121213ff; border-bottom: 3px solid black;">
+        <h4 class="fw-bold pb-2 mb-4 mt-5" style="color: #121213ff; border-bottom: 3px solid black;">
             Jumlah dan Persentase Usaha Menurut Skala Usaha / Nilai Aset        
         </h4>
         <table class="table table-bordered table-hover table-striped align-middle">
-            <tr><th>Skala Usaha</th><th>Jumlah (Unit)</th><th>Persentase</th></tr>
-            @foreach($tabel['skalaAset'] as $row)
-            <tr>
-                <td>{{ $row['skala'] }}</td>
-                <td>{{ $row['jumlah'] }}</td>
-                <td>{{ $row['persentase'] }}%</td>
-            </tr>
-            @endforeach
-            <tr class="fw-bold table-light">
-                <td>Total</td>
-                <td>{{ array_sum(array_column($tabel['skalaAset'], 'jumlah')) }}</td>
-                <td>100%</td>
-            </tr>
+            <thead>
+                <tr><th>Skala Usaha</th><th>Jumlah (Unit)</th><th>Persentase</th></tr>
+            </thead>
+            <tbody>
+                @foreach($tabel['skalaAset'] as $row)
+                <tr>
+                    <td>{{ $row['skala'] }}</td>
+                    <td>{{ $row['jumlah'] }}</td>
+                    <td>{{ $row['persentase'] }}%</td>
+                </tr>
+                @endforeach
+                <tr class="fw-bold table-light">
+                    <td>Total</td>
+                    <td>{{ array_sum(array_column($tabel['skalaAset'], 'jumlah')) }}</td>
+                    <td>100%</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
     <!-- Rekap 4 -->
     <div class="mb-4">
-        <h4 class="fw-bold pb-2 mb-3" 
-            style="color: #121213ff; border-bottom: 3px solid black;">
+        <h4 class="fw-bold pb-2 mb-4 mt-5" style="color: #121213ff; border-bottom: 3px solid black;">
             Rata-Rata Nilai Aset Menurut Jenisnya        
         </h4>
         <table class="table table-bordered table-hover table-striped align-middle">
-            <tr><th>Jenis Aset</th><th>Nilai (Rupiah)</th><th>Persentase</th></tr>
-            @foreach($tabel['jenisAset'] as $row)
-            <tr>
-                <td>{{ $row['jenis'] }}</td>
-                <td>{{ number_format($row['nilai'],0,',','.') }}</td>
-                <td>{{ $row['persentase'] }}%</td>
-            </tr>
-            @endforeach
-            <tr class="fw-bold table-light">
-                <td>Total</td>
-                <td>{{ number_format(array_sum(array_column($tabel['jenisAset'], 'nilai')),0,',','.') }}</td>
-                <td>100%</td>
-            </tr>
+            <thead>
+                <tr><th>Jenis Aset</th><th>Nilai (Rupiah)</th><th>Persentase</th></tr>
+            </thead>
+            <tbody>
+                @foreach($tabel['jenisAset'] as $row)
+                <tr>
+                    <td>{{ $row['jenis'] }}</td>
+                    <td>{{ number_format($row['nilai'],0,',','.') }}</td>
+                    <td>{{ $row['persentase'] }}%</td>
+                </tr>
+                @endforeach
+                <tr class="fw-bold table-light">
+                    <td>Total</td>
+                    <td>{{ number_format(array_sum(array_column($tabel['jenisAset'], 'nilai')),0,',','.') }}</td>
+                    <td>100%</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
     <!-- Rekap 5 -->
-
     <div class="mb-4">
-        <h4 class="fw-bold pb-2 mb-3" 
-            style="color: #121213ff; border-bottom: 3px solid black;">
+        <h4 class="fw-bold pb-2 mb-4 mt-5" style="color: #121213ff; border-bottom: 3px solid black;">
             Jumlah Persentase Usaha Menurut Badan Usaha
         </h4>
         <table class="table table-bordered table-hover table-striped align-middle">
-            <tr><th>Badan Usaha</th><th>Jumlah (Unit)</th><th>Persentase</th></tr>
-            @foreach($tabel['badanUsaha'] as $row)
-            <tr>
-                <td>{{ $row['badan'] }}</td>
-                <td>{{ $row['jumlah'] }}</td>
-                <td>{{ $row['persentase'] }}%</td>
-            </tr>
-            @endforeach
-            <tr class="fw-bold table-light">
-                <td>Total</td>
-                <td>{{ array_sum(array_column($tabel['badanUsaha'], 'jumlah')) }}</td>
-                <td>100%</td>
-            </tr>
+            <thead>
+                <tr><th>Badan Usaha</th><th>Jumlah (Unit)</th><th>Persentase</th></tr>
+            </thead>
+            <tbody>
+                @foreach($tabel['badanUsaha'] as $row)
+                <tr>
+                    <td>{{ $row['badan'] }}</td>
+                    <td>{{ $row['jumlah'] }}</td>
+                    <td>{{ $row['persentase'] }}%</td>
+                </tr>
+                @endforeach
+                <tr class="fw-bold table-light">
+                    <td>Total</td>
+                    <td>{{ array_sum(array_column($tabel['badanUsaha'], 'jumlah')) }}</td>
+                    <td>100%</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
     <!-- Rekap 6 -->
     <div class="mb-4">
-        <h4 class="fw-bold pb-2 mb-3" 
-            style="color: #121213ff; border-bottom: 3px solid black;">
+        <h4 class="fw-bold pb-2 mb-4 mt-5" style="color: #121213ff; border-bottom: 3px solid black;">
             Nilai NTB Menurut Kategori Usaha
         </h4>
         <table class="table table-bordered table-hover table-striped align-middle">
-            <tr><th>Kategori</th><th>NTB (Rupiah)</th></tr>
-            @foreach($tabel['ntbKategori'] as $row)
-            <tr>
-                <td>{{ $row['kategori'] }}</td>
-                <td>{{ number_format($row['ntb'],0,',','.') }}</td>
-            </tr>
-            @endforeach
-            <tr class="fw-bold table-light">
-                <td>Total</td>
-                <td>{{ number_format(array_sum(array_column($tabel['ntbKategori'], 'ntb')),0,',','.') }}</td>
-            </tr>
+            <thead>
+                <tr><th>Kategori</th><th>NTB (Rupiah)</th></tr>
+            </thead>
+            <tbody>
+                @foreach($tabel['ntbKategori'] as $row)
+                <tr>
+                    <td>{{ $row['kategori'] }}</td>
+                    <td>{{ number_format($row['ntb'],0,',','.') }}</td>
+                </tr>
+                @endforeach
+                <tr class="fw-bold table-light">
+                    <td>Total</td>
+                    <td>{{ number_format(array_sum(array_column($tabel['ntbKategori'], 'ntb')),0,',','.') }}</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 

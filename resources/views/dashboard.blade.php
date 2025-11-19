@@ -440,7 +440,7 @@
     // update tooltip & perbaiki layout tile saat berubah fullscreen
     const onFsChange = () => {
       const aktif = !!isFs();
-      const title = aktif ? 'Keluar full view' : 'Lihat versi full';
+      const title = aktif ? 'Keluar versil full' : 'Lihat versi full';
       btn.title = title;
       btn.setAttribute('aria-label', title);
       // invalidateSize agar peta menyesuaikan ukuran baru
