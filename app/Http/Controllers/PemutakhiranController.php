@@ -9,6 +9,19 @@ class PemutakhiranController extends Controller
 {
     public function index(Request $request) //search
     {
+        $correctPassword = "kpsecret123";
+
+        // ====== PASSWORD GATE ======
+        if (! $request->has('password')) {
+            return view('auth.simple-password');
+        }
+
+        if ($request->password !== $correctPassword) {
+            return view('auth.simple-password', [
+                'error' => 'Password salah!'
+            ]);
+        }
+
         $query = PemutakhiranData::query();
 
         if ($request->has('search')) {

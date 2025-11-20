@@ -10,6 +10,19 @@ class PendataanController extends Controller
     // Menampilkan semua data
    public function index(Request $request)
 {
+    $correctPassword = "kpsecret123";
+
+        // ====== PASSWORD GATE ======
+        if (! $request->has('password')) {
+            return view('auth.simple-password');
+        }
+
+        if ($request->password !== $correctPassword) {
+            return view('auth.simple-password', [
+                'error' => 'Password salah!'
+            ]);
+        }
+
     $query = PendataanUsaha::query();
 
     if ($request->has('search')) {
