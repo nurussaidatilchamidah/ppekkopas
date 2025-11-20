@@ -9,18 +9,26 @@ class PemutakhiranController extends Controller
 {
     public function index(Request $request) //search
     {
-        $correctPassword = "kpsecret123";
+       $correctPassword = "kpsecret123";
 
-        // ====== PASSWORD GATE ======
-        if (! $request->has('password')) {
+    // ====== PASSWORD GATE HANYA SEKALI ======
+    if (!session()->has('passed_pemutakhiran')) {
+
+        // Jika belum kirim password → tampilkan form
+        if (!$request->has('password')) {
             return view('auth.simple-password');
         }
 
+        // Jika password salah
         if ($request->password !== $correctPassword) {
             return view('auth.simple-password', [
                 'error' => 'Password salah!'
             ]);
         }
+
+        // Password benar → simpan ke session
+        session(['passed_pemutakhiran' => true]);
+    }
 
         $query = PemutakhiranData::query();
 
