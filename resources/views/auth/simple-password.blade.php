@@ -7,7 +7,7 @@
 
 <h2>Masukkan Password</h2>
 
-<form method="GET">
+<form method="GET" action="{{ $targetRoute }}">
     <input 
         type="password" 
         name="password" 

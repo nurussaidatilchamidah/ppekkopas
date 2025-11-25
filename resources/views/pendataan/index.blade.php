@@ -94,12 +94,10 @@
 
 <!-- search -->
 <form action="{{ route('pendataan.index') }}" method="GET" class="d-flex flex-grow-1 justify-content-end" role="search" style="max-width: 100%;">
-        <input 
-            type="text" 
-            name="search" 
-            class="form-control custom-search-input" 
-placeholder="Cari berdasarkan kelurahan, nama usaha atau kategori usaha....."             
-value="{{ request('search') }}"
+    <input type="hidden" name="authenticated" value="1">
+        <input type="text" name="search" class="form-control custom-search-input" 
+        placeholder="Cari berdasarkan kelurahan, nama usaha atau kategori usaha....."             
+        value="{{ request('search') }}"
             style="min-width: 300px;">
         <button class="btn btn-warning text-white" type="submit" title="Cari">
             <i class="fas fa-search"></i>
@@ -107,7 +105,8 @@ value="{{ request('search') }}"
     </form>
 
 <form method="GET" action="{{ route('pendataan.index') }}" class="mb-3 d-flex gap-2">
-        {{-- Filter Kelurahan --}}
+    <input type="hidden" name="authenticated" value="1">
+{{-- Filter Kelurahan --}}
         <select name="kelurahan" class="form-control filter">
             <option value="">Kelurahan</option>
             @foreach($allowedKelurahan as $kel)
@@ -128,8 +127,8 @@ value="{{ request('search') }}"
         </select>
 
         <button type="submit" class="btn btn-primary">Filter</button>
-        <a href="{{ route('pendataan.index') }}" class="btn btn-secondary">
-            Reset 
+        <a href="{{ route('pendataan.index', ['authenticated' => 1]) }}" class="btn btn-secondary">
+            Reset
         </a>
     </form>
 </div>   
@@ -208,7 +207,9 @@ value="{{ request('search') }}"
 <div class="d-flex align-items-center mt-2 w-100">
     <div>
         <form action="{{ route('pendataan.index') }}" method="GET" class="d-flex align-items-center">
-            <label for="per_page" class="me-2 mb-0 fw-bold fs-17px">Tampilkan</label>
+        <input type="hidden" name="authenticated" value="1">    
+        
+        <label for="per_page" class="me-2 mb-0 fw-bold fs-17px">Tampilkan</label>
             <select name="per_page" id="per_page" class="form-select me-2" onchange="this.form.submit()" style="max-width: 200px;">
                 <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
                 <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>

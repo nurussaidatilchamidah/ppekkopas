@@ -7,27 +7,34 @@ use Illuminate\Http\Request;
 
 class PemutakhiranController extends Controller
 {
-    public function index(Request $request) //search
-    {
-       $correctPassword = "kpsecret123";
+   // Menampilkan semua data
+   public function index(Request $request)
+{
+   $correctPassword = "kpsecret123";
 
-    // ====== PASSWORD GATE HANYA SEKALI ======
-    if (!session()->has('passed_pemutakhiran')) {
+   //----------------------------------------------------
+    // 1. CEK: kalau TIDAK ada authenticated=1 → wajib password
+    //----------------------------------------------------
+    if (!$request->boolean('authenticated')) {
 
-        // Jika belum kirim password → tampilkan form
+        // Belum submit apa pun → tampilkan form password
         if (!$request->has('password')) {
-            return view('auth.simple-password');
+            return view('auth.simple-password', [
+                'targetRoute' => route('pemutakhiran.index')
+            ]);
         }
 
         // Jika password salah
         if ($request->password !== $correctPassword) {
             return view('auth.simple-password', [
-                'error' => 'Password salah!'
+                'error' => 'Password salah!',
+                'targetRoute' => route('pemutakhiran.index')
             ]);
         }
 
-        // Password benar → simpan ke session
-        session(['passed_pemutakhiran' => true]);
+
+      // Password benar → redirect pakai authenticated=1
+        return redirect()->route('pemutakhiran.index', ['authenticated' => 1]);
     }
 
         $query = PemutakhiranData::query();

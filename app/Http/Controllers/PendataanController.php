@@ -12,19 +12,28 @@ class PendataanController extends Controller
 {
    $correctPassword = "kpsecret123";
 
-    // Jika belum mengirim password → tampilkan form
-    if (!$request->has('password')) {
-        return view('auth.simple-password', [
-            'targetRoute' => 'pendataan'
-        ]);
-    }
+    //----------------------------------------------------
+    // 1. CEK: kalau TIDAK ada authenticated=1 → wajib password
+    //----------------------------------------------------
+    if (!$request->boolean('authenticated')) {
 
-     // Jika password salah → kembali ke form
-    if ($request->password !== $correctPassword) {
-        return view('auth.simple-password', [
-            'error' => 'Password salah!',
-            'targetRoute' => 'pendataan'
-        ]);
+        // Belum submit apa pun → tampilkan form password
+        if (!$request->has('password')) {
+            return view('auth.simple-password', [
+                'targetRoute' => route('pendataan.index')
+            ]);
+        }
+
+        // Jika password salah
+        if ($request->password !== $correctPassword) {
+            return view('auth.simple-password', [
+                'error' => 'Password salah!',
+                'targetRoute' => route('pendataan.index')
+            ]);
+        }
+
+        // Password benar → redirect pakai authenticated=1
+        return redirect()->route('pendataan.index', ['authenticated' => 1]);
     }
 
     $query = PendataanUsaha::query();

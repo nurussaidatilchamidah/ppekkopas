@@ -148,6 +148,7 @@
 
     <!-- search -->
     <form action="{{ route('pemutakhiran.index') }}" method="GET" class="d-flex flex-grow-1 justify-content-end" role="search" style="max-width: 100%;">
+        <input type="hidden" name="authenticated" value="1">
             <input 
                 type="text" 
                 name="search" 
@@ -161,6 +162,7 @@
     </form>
 
     <form method="GET" action="{{ route('pemutakhiran.index') }}" class="mb-3 d-flex gap-2">
+        <input type="hidden" name="authenticated" value="1">
         {{-- Filter Kelurahan --}}
         <select name="kelurahan" class="form-control filter">
             <option value="">Kelurahan</option>
@@ -182,8 +184,8 @@
         </select>
 
         <button type="submit" class="btn btn-primary">Filter</button>
-        <a href="{{ route('pemutakhiran.index') }}" class="btn btn-secondary">
-            Reset 
+        <a href="{{ route('pemutakhiran.index', ['authenticated' => 1]) }}" class="btn btn-secondary">
+            Reset
         </a>
     </form>
 </div>
@@ -258,6 +260,7 @@
     <!-- kiri: dropdown per page -->
         <div>
         <form action="{{ route('pemutakhiran.index') }}" method="GET" class="d-flex align-items-center">
+           <input type="hidden" name="authenticated" value="1">
             <label for="per_page" class="me-2 mb-0 fw-bold fs-17px">Tampilkan</label>
             <select name="per_page" id="per_page" class="form-select me-2" onchange="this.form.submit()" style="max-width: 200px;">
                 <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
