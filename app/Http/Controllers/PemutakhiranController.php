@@ -311,7 +311,5 @@ public function rekap()
         'lokasiUsaha'
     ));
 }
-
-
 }
 
